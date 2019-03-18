@@ -1,0 +1,6 @@
+.vs/
+APPPInCSharp_Payroll.Console/bin/
+APPPInCSharp_Payroll.Console/obj/
+APPPInCSharp_Payroll.UnitTests/bin/
+APPPInCSharp_Payroll.UnitTests/obj/
+packages/

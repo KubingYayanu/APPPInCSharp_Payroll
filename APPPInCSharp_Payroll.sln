@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APPPInCSharp_Payroll.Console", "APPPInCSharp_Payroll.Console\APPPInCSharp_Payroll.Console.csproj", "{D5B6FF98-125A-452A-AE6B-AED6F540AA80}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APPPInCSharp_Payroll.UnitTests", "APPPInCSharp_Payroll.UnitTests\APPPInCSharp_Payroll.UnitTests.csproj", "{7BD80C9B-2FE3-47A6-81B9-CA69182E6221}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D5B6FF98-125A-452A-AE6B-AED6F540AA80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5B6FF98-125A-452A-AE6B-AED6F540AA80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5B6FF98-125A-452A-AE6B-AED6F540AA80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5B6FF98-125A-452A-AE6B-AED6F540AA80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BD80C9B-2FE3-47A6-81B9-CA69182E6221}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BD80C9B-2FE3-47A6-81B9-CA69182E6221}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BD80C9B-2FE3-47A6-81B9-CA69182E6221}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BD80C9B-2FE3-47A6-81B9-CA69182E6221}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
