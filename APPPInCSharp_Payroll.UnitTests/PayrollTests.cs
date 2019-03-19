@@ -1,5 +1,6 @@
 ﻿using APPPInCSharp_Payroll.Console;
 using NUnit.Framework;
+using System;
 
 namespace APPPInCSharp_Payroll.UnitTests
 {
@@ -91,6 +92,28 @@ namespace APPPInCSharp_Payroll.UnitTests
 
             Employee e2 = PayrollDatabase.GetEmployee(empId);
             Assert.That(e2, Is.Null);
+        }
+
+        [Test]
+        public void TestTimeCardTransaction()
+        {
+            int empId = 5;
+            AddHourlyEmployee t = new AddHourlyEmployee(empId, "Kubing", "Home", 15.25);
+            t.Execute();
+
+            TimeCardTransaction tct = new TimeCardTransaction(new DateTime(2005, 7, 31), 8.0, empId);
+            tct.Execute();
+
+            Employee e = PayrollDatabase.GetEmployee(empId);
+            Assert.IsNotNull(e);
+
+            PaymentClassification pc = e.Classification;
+            Assert.IsTrue(pc is HourlyClassification);
+
+            HourlyClassification hc = pc as HourlyClassification;
+            TimeCard tc = hc.GetTimeCard(new DateTime(2005, 7, 31));
+            Assert.IsNotNull(tc);
+            Assert.AreEqual(8.0, tc.Hours);
         }
     }
 }

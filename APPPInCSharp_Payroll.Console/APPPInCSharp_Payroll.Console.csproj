@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TimeCard.cs" />
     <Compile Include="Transactions\AddCommissionEmployee.cs" />
     <Compile Include="Transactions\AddEmployeeTransaction.cs" />
     <Compile Include="Transactions\AddHourlyEmployee.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transactions\DeleteEmployeeTransaction.cs" />
+    <Compile Include="Transactions\TimeCardTransaction.cs" />
     <Compile Include="Transactions\Transaction.cs" />
     <Compile Include="Classifications\SalariedClassification.cs" />
     <Compile Include="Schedules\WeeklySchedule.cs" />
