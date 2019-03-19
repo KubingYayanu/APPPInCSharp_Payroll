@@ -138,5 +138,28 @@ namespace APPPInCSharp_Payroll.UnitTests
             Assert.AreEqual(4, sr.Amount);
         }
 
+        [Test]
+        public void TestAddServiceCharge()
+        {
+            int empId = 2;
+            AddHourlyEmployee t = new AddHourlyEmployee(empId, "Kubing", "Home", 15.25);
+            t.Execute();
+
+            Employee e = PayrollDatabase.GetEmployee(empId);
+            Assert.IsNotNull(e);
+
+            UnionAffiliation ua = new UnionAffiliation();
+            e.Affiliation = ua;
+
+            int memberId = 86;
+            PayrollDatabase.AddUnionMember(memberId, e);
+
+            ServiceChargeTransaction sct = new ServiceChargeTransaction(memberId, new DateTime(2005, 8, 8), 12.95);
+            sct.Execute();
+
+            ServiceCharge sc = ua.GetServiceCharge(new DateTime(2005, 8, 8));
+            Assert.IsNotNull(sc);
+            Assert.AreEqual(12.95, sc.Amount, 0.001);
+        }
     }
 }

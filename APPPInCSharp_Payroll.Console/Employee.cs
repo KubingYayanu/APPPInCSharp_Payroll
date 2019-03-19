@@ -14,6 +14,8 @@
 
         public PaymentMethod Method { get; set; }
 
+        public Affiliation Affiliation { get; set; }
+
         public Employee(int empid, string name, string address)
         {
             EmpId = empid;
