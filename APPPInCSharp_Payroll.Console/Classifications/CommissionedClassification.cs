@@ -1,7 +1,12 @@
-﻿namespace APPPInCSharp_Payroll.Console
+﻿using System;
+using System.Collections;
+
+namespace APPPInCSharp_Payroll.Console
 {
     public class CommissionedClassification : PaymentClassification
     {
+        private Hashtable salesReceipts = new Hashtable();
+
         public double Salary { get; }
 
         public double CommissionRate { get; }
@@ -10,6 +15,13 @@
         {
             Salary = salary;
             CommissionRate = commissionRate;
+        }
+
+        public SalesReceipt GetSalesReceipt(DateTime date) => salesReceipts[date] as SalesReceipt;
+
+        public void AddSalesReceipt(SalesReceipt sr)
+        {
+            salesReceipts[sr.Date] = sr;
         }
     }
 }

@@ -115,5 +115,28 @@ namespace APPPInCSharp_Payroll.UnitTests
             Assert.IsNotNull(tc);
             Assert.AreEqual(8.0, tc.Hours);
         }
+
+        [Test]
+        public void TestSalesReceiptTransaction()
+        {
+            int empId = 6;
+            AddCommissionEmployee t = new AddCommissionEmployee(empId, "Kubing", "Home", 2000, 3.0);
+            t.Execute();
+
+            SalesReceiptTransaction srt = new SalesReceiptTransaction(new DateTime(2017, 3, 19), 4, empId);
+            srt.Execute();
+
+            Employee e = PayrollDatabase.GetEmployee(empId);
+            Assert.IsNotNull(e);
+
+            PaymentClassification pc = e.Classification;
+            Assert.IsTrue(pc is CommissionedClassification);
+
+            CommissionedClassification hc = pc as CommissionedClassification;
+            SalesReceipt sr = hc.GetSalesReceipt(new DateTime(2017, 3, 19));
+            Assert.IsNotNull(sr);
+            Assert.AreEqual(4, sr.Amount);
+        }
+
     }
 }
