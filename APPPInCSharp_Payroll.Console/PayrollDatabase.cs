@@ -12,5 +12,10 @@ namespace APPPInCSharp_Payroll.Console
         }
 
         public static Employee GetEmployee(int id) => employees[id] as Employee;
+
+        public static void DeleteEmployee(int id)
+        {
+            employees[id] = null;
+        }
     }
 }

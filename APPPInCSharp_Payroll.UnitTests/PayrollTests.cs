@@ -75,5 +75,22 @@ namespace APPPInCSharp_Payroll.UnitTests
             PaymentMethod pm = e.Method;
             Assert.That(pm is HoldMethod, Is.True);
         }
+
+        [Test]
+        public void TestDeleteEmployee()
+        {
+            int empId = 4;
+            AddCommissionEmployee t = new AddCommissionEmployee(empId, "Kubing", "Home", 2500, 3.2);
+            t.Execute();
+
+            Employee e = PayrollDatabase.GetEmployee(empId);
+            Assert.That(e, Is.Not.Null);
+
+            DeleteEmployeeTransaction dt = new DeleteEmployeeTransaction(empId);
+            dt.Execute();
+
+            Employee e2 = PayrollDatabase.GetEmployee(empId);
+            Assert.That(e2, Is.Null);
+        }
     }
 }
