@@ -43,8 +43,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Transactions\AddCommissionEmployee.cs" />
+    <Compile Include="Transactions\AddEmployeeTransaction.cs" />
+    <Compile Include="Transactions\AddHourlyEmployee.cs" />
+    <Compile Include="Transactions\AddSalariedEmployee.cs" />
+    <Compile Include="Schedules\BiweeklySchedule.cs" />
+    <Compile Include="Classifications\CommissionedClassification.cs" />
+    <Compile Include="Employee.cs" />
+    <Compile Include="Methods\HoldMethod.cs" />
+    <Compile Include="Classifications\HourlyClassification.cs" />
+    <Compile Include="Classifications\PaymentClassification.cs" />
+    <Compile Include="Methods\PaymentMethod.cs" />
+    <Compile Include="Schedules\PaymentSchedule.cs" />
+    <Compile Include="Schedules\MonthlySchedule.cs" />
+    <Compile Include="PayrollDatabase.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Transactions\Transaction.cs" />
+    <Compile Include="Classifications\SalariedClassification.cs" />
+    <Compile Include="Schedules\WeeklySchedule.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
