@@ -64,6 +64,7 @@
     <Compile Include="PayrollDatabase.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Transactions\ChangeAddressTransaction.cs" />
     <Compile Include="Transactions\ChangeEmployeeTransaction.cs" />
     <Compile Include="Transactions\ChangeNameTransaction.cs" />
     <Compile Include="Transactions\DeleteEmployeeTransaction.cs" />

@@ -177,5 +177,21 @@ namespace APPPInCSharp_Payroll.UnitTests
             Assert.IsNotNull(e);
             Assert.AreEqual("Yuling", e.Name);
         }
+
+        [Test]
+        public void TestChangeAddressTransaction()
+        {
+            int empId = 3;
+            AddHourlyEmployee t = new AddHourlyEmployee(empId, "Kubing", "Home", 15.25);
+            t.Execute();
+
+            ChangeAddressTransaction cat = new ChangeAddressTransaction(empId, "Company");
+            cat.Execute();
+
+            Employee e = PayrollDatabase.GetEmployee(empId);
+
+            Assert.IsNotNull(e);
+            Assert.AreEqual("Company", e.Address);
+        }
     }
 }
