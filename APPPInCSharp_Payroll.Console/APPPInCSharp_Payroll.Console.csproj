@@ -69,6 +69,7 @@
     <Compile Include="Transactions\ChangeEmployeeTransaction.cs" />
     <Compile Include="Transactions\ChangeHourlyTransaction.cs" />
     <Compile Include="Transactions\ChangeNameTransaction.cs" />
+    <Compile Include="Transactions\ChangeSalariedTransaction.cs" />
     <Compile Include="Transactions\DeleteEmployeeTransaction.cs" />
     <Compile Include="Transactions\SalesReceiptTransaction.cs" />
     <Compile Include="Transactions\ServiceChargeTransaction.cs" />
