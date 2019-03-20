@@ -266,5 +266,23 @@ namespace APPPInCSharp_Payroll.UnitTests
             PaymentSchedule ps = e.Schedule;
             Assert.IsTrue(ps is BiweeklySchedule);
         }
+
+        [Test]
+        public void TestChangeDirectTransaction()
+        {
+            int empId = 2;
+            AddCommissionEmployee t = new AddCommissionEmployee(empId, "Kubing", "Home", 2000.00, 3.1);
+            t.Execute();
+
+            ChangeDirectTransaction cmt = new ChangeDirectTransaction(empId);
+            cmt.Execute();
+
+            Employee e = PayrollDatabase.GetEmployee(empId);
+            Assert.IsNotNull(e);
+
+            PaymentMethod pm = e.Method;
+            Assert.IsNotNull(pm);
+            Assert.IsTrue(pm is DirectMethod);
+        }
     }
 }

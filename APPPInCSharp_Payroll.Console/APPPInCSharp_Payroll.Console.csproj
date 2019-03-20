@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="Affiliation\Affiliation.cs" />
     <Compile Include="Affiliation\UnionAffiliation.cs" />
+    <Compile Include="Methods\DirectMethod.cs" />
+    <Compile Include="Methods\MailMethod.cs" />
     <Compile Include="Models\SalesReceipt.cs" />
     <Compile Include="Models\ServiceCharge.cs" />
     <Compile Include="Models\TimeCard.cs" />
@@ -67,8 +69,10 @@
     <Compile Include="Transactions\ChangeAddressTransaction.cs" />
     <Compile Include="Transactions\ChangeClassificationTransaction.cs" />
     <Compile Include="Transactions\ChangeCommissionedTransaction.cs" />
+    <Compile Include="Transactions\ChangeDirectTransaction.cs" />
     <Compile Include="Transactions\ChangeEmployeeTransaction.cs" />
     <Compile Include="Transactions\ChangeHourlyTransaction.cs" />
+    <Compile Include="Transactions\ChangeMethodTransaction.cs" />
     <Compile Include="Transactions\ChangeNameTransaction.cs" />
     <Compile Include="Transactions\ChangeSalariedTransaction.cs" />
     <Compile Include="Transactions\DeleteEmployeeTransaction.cs" />
