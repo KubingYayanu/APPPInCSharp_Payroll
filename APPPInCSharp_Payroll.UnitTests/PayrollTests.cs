@@ -302,5 +302,23 @@ namespace APPPInCSharp_Payroll.UnitTests
             Assert.IsNotNull(pm);
             Assert.IsTrue(pm is MailMethod);
         }
+
+        [Test]
+        public void TestChangeHoldTransaction()
+        {
+            int empId = 4;
+            AddCommissionEmployee t = new AddCommissionEmployee(empId, "Kubing", "Home", 2000.00, 3.1);
+            t.Execute();
+
+            ChangeHoldTransaction cmt = new ChangeHoldTransaction(empId);
+            cmt.Execute();
+
+            Employee e = PayrollDatabase.GetEmployee(empId);
+            Assert.IsNotNull(e);
+
+            PaymentMethod pm = e.Method;
+            Assert.IsNotNull(pm);
+            Assert.IsTrue(pm is HoldMethod);
+        }
     }
 }

@@ -71,6 +71,7 @@
     <Compile Include="Transactions\ChangeCommissionedTransaction.cs" />
     <Compile Include="Transactions\ChangeDirectTransaction.cs" />
     <Compile Include="Transactions\ChangeEmployeeTransaction.cs" />
+    <Compile Include="Transactions\ChangeHoldTransaction.cs" />
     <Compile Include="Transactions\ChangeHourlyTransaction.cs" />
     <Compile Include="Transactions\ChangeMailTransaction.cs" />
     <Compile Include="Transactions\ChangeMethodTransaction.cs" />
