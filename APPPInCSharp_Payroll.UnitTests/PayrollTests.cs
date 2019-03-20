@@ -274,8 +274,8 @@ namespace APPPInCSharp_Payroll.UnitTests
             AddCommissionEmployee t = new AddCommissionEmployee(empId, "Kubing", "Home", 2000.00, 3.1);
             t.Execute();
 
-            ChangeDirectTransaction cmt = new ChangeDirectTransaction(empId);
-            cmt.Execute();
+            ChangeDirectTransaction cdt = new ChangeDirectTransaction(empId);
+            cdt.Execute();
 
             Employee e = PayrollDatabase.GetEmployee(empId);
             Assert.IsNotNull(e);
@@ -283,6 +283,24 @@ namespace APPPInCSharp_Payroll.UnitTests
             PaymentMethod pm = e.Method;
             Assert.IsNotNull(pm);
             Assert.IsTrue(pm is DirectMethod);
+        }
+
+        [Test]
+        public void TestChangeMailTransaction()
+        {
+            int empId = 3;
+            AddCommissionEmployee t = new AddCommissionEmployee(empId, "Kubing", "Home", 2000.00, 3.1);
+            t.Execute();
+
+            ChangeMailTransaction cmt = new ChangeMailTransaction(empId);
+            cmt.Execute();
+
+            Employee e = PayrollDatabase.GetEmployee(empId);
+            Assert.IsNotNull(e);
+
+            PaymentMethod pm = e.Method;
+            Assert.IsNotNull(pm);
+            Assert.IsTrue(pm is MailMethod);
         }
     }
 }
