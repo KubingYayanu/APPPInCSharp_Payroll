@@ -30,5 +30,10 @@ namespace APPPInCSharp_Payroll.Console
         {
             members[memberId] = e.EmpId;
         }
+
+        public static void RemoveUnionMember(int memberId)
+        {
+            members[memberId] = null;
+        }
     }
 }

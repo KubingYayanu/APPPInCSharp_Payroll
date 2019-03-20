@@ -323,7 +323,7 @@ namespace APPPInCSharp_Payroll.UnitTests
         }
 
         [Test]
-        public void TestChangeUnionMember()
+        public void TestChangeMemberTransaction()
         {
             int empId = 9;
             AddHourlyEmployee t = new AddHourlyEmployee(empId, "Kubing", "Home", 25.32);
@@ -345,6 +345,30 @@ namespace APPPInCSharp_Payroll.UnitTests
             Employee member = PayrollDatabase.GetUnionMember(memberId);
             Assert.IsNotNull(member);
             Assert.AreEqual(e, member);
+        }
+
+        [Test]
+        public void TestChangeUnaffiliatedTransaction()
+        {
+            int empId = 10;
+            AddHourlyEmployee t = new AddHourlyEmployee(empId, "Kubing", "Home", 25.32);
+            t.Execute();
+
+            int memberId = 7783;
+            ChangeMemberTransaction cmt = new ChangeMemberTransaction(empId, memberId, 99.42);
+            cmt.Execute();
+
+            ChangeUnaffiliatedTransaction cut = new ChangeUnaffiliatedTransaction(empId);
+            cut.Execute();
+
+            Employee e = PayrollDatabase.GetEmployee(empId);
+            Affiliation affiliation = e.Affiliation;
+            Assert.IsNotNull(e);
+            Assert.IsNotNull(affiliation);
+            Assert.IsTrue(affiliation is NoAffiliation);
+
+            Employee member = PayrollDatabase.GetUnionMember(memberId);
+            Assert.IsNull(member);
         }
     }
 }

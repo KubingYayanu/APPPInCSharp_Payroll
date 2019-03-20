@@ -6,13 +6,15 @@ namespace APPPInCSharp_Payroll.Console
     public class UnionAffiliation : Affiliation
     {
         private Hashtable serviceCharges = new Hashtable();
-        private readonly int memberId;
+
+        public int MemberId { get; }
+
         public double Dues { get; }
 
         public UnionAffiliation(int memberId, double dues)
         {
-            this.memberId = memberId;
-            this.Dues = dues;
+            MemberId = memberId;
+            Dues = dues;
         }
 
         public void AddServiceCharge(ServiceCharge sc)
