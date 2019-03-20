@@ -193,5 +193,29 @@ namespace APPPInCSharp_Payroll.UnitTests
             Assert.IsNotNull(e);
             Assert.AreEqual("Company", e.Address);
         }
+
+        [Test]
+        public void TestChangeHourlyTransaction()
+        {
+            int empId = 3;
+            AddCommissionEmployee t = new AddCommissionEmployee(empId, "Kubing", "Home", 2500, 3.2);
+            t.Execute();
+
+            ChangeHourlyTransaction cht = new ChangeHourlyTransaction(empId, 27.52);
+            cht.Execute();
+
+            Employee e = PayrollDatabase.GetEmployee(empId);
+            Assert.IsNotNull(e);
+
+            PaymentClassification pc = e.Classification;
+            Assert.IsNotNull(pc);
+            Assert.IsTrue(pc is HourlyClassification);
+
+            HourlyClassification hc = pc as HourlyClassification;
+            Assert.AreEqual(27.52, hc.HourlyRate, 0.001);
+
+            PaymentSchedule ps = e.Schedule;
+            Assert.IsTrue(ps is WeeklySchedule);
+        }
     }
 }
