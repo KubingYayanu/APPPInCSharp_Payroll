@@ -148,11 +148,12 @@ namespace APPPInCSharp_Payroll.UnitTests
             Employee e = PayrollDatabase.GetEmployee(empId);
             Assert.IsNotNull(e);
 
-            UnionAffiliation ua = new UnionAffiliation();
-            e.Affiliation = ua;
 
             int memberId = 86;
             PayrollDatabase.AddUnionMember(memberId, e);
+
+            UnionAffiliation ua = new UnionAffiliation(memberId, 99.52);
+            e.Affiliation = ua;
 
             ServiceChargeTransaction sct = new ServiceChargeTransaction(memberId, new DateTime(2005, 8, 8), 12.95);
             sct.Execute();
@@ -319,6 +320,31 @@ namespace APPPInCSharp_Payroll.UnitTests
             PaymentMethod pm = e.Method;
             Assert.IsNotNull(pm);
             Assert.IsTrue(pm is HoldMethod);
+        }
+
+        [Test]
+        public void TestChangeUnionMember()
+        {
+            int empId = 9;
+            AddHourlyEmployee t = new AddHourlyEmployee(empId, "Kubing", "Home", 25.32);
+            t.Execute();
+
+            int memberId = 7783;
+            ChangeMemberTransaction cmt = new ChangeMemberTransaction(empId, memberId, 99.42);
+            cmt.Execute();
+
+            Employee e = PayrollDatabase.GetEmployee(empId);
+            Affiliation affiliation = e.Affiliation;
+            Assert.IsNotNull(e);
+            Assert.IsNotNull(affiliation);
+            Assert.IsTrue(affiliation is UnionAffiliation);
+
+            UnionAffiliation ua = e.Affiliation as UnionAffiliation;
+            Assert.AreEqual(99.42, ua.Dues, 0.001);
+
+            Employee member = PayrollDatabase.GetUnionMember(memberId);
+            Assert.IsNotNull(member);
+            Assert.AreEqual(e, member);
         }
     }
 }
