@@ -241,5 +241,30 @@ namespace APPPInCSharp_Payroll.UnitTests
             PaymentSchedule ps = e.Schedule;
             Assert.IsTrue(ps is MonthlySchedule);
         }
+
+        [Test]
+        public void TestChangeCommissionTransaction()
+        {
+            int empId = 5;
+            AddHourlyEmployee t = new AddHourlyEmployee(empId, "Kubing", "Home", 15.25);
+            t.Execute();
+
+            ChangeCommissionedTransaction cct = new ChangeCommissionedTransaction(empId, 2000.00, 3.8);
+            cct.Execute();
+
+            Employee e = PayrollDatabase.GetEmployee(empId);
+            Assert.IsNotNull(e);
+
+            PaymentClassification pc = e.Classification;
+            Assert.IsNotNull(pc);
+            Assert.IsTrue(pc is CommissionedClassification);
+
+            CommissionedClassification cc = pc as CommissionedClassification;
+            Assert.AreEqual(2000.00, cc.Salary, 0.001);
+            Assert.AreEqual(3.8, cc.CommissionRate, 0.001);
+
+            PaymentSchedule ps = e.Schedule;
+            Assert.IsTrue(ps is BiweeklySchedule);
+        }
     }
 }
