@@ -1,6 +1,9 @@
-﻿namespace APPPInCSharp_Payroll.Console
+﻿using System;
+
+namespace APPPInCSharp_Payroll.Console
 {
     public interface PaymentSchedule
     {
+        bool IsPayDate(DateTime payDate);
     }
 }

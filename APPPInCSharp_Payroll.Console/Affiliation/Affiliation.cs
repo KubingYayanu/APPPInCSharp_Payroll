@@ -2,5 +2,6 @@
 {
     public interface Affiliation
     {
+        double CalculateDeductions(Paycheck paycheck);
     }
 }

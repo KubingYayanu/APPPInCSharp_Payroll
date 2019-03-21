@@ -23,5 +23,10 @@ namespace APPPInCSharp_Payroll.Console
         {
             salesReceipts[sr.Date] = sr;
         }
+
+        public double CalculatePay(Paycheck paycheck)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

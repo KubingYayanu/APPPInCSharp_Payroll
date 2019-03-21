@@ -8,5 +8,7 @@
         {
             Salary = salary;
         }
+
+        public double CalculatePay(Paycheck paycheck) => Salary;
     }
 }

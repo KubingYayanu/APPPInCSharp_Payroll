@@ -370,5 +370,40 @@ namespace APPPInCSharp_Payroll.UnitTests
             Employee member = PayrollDatabase.GetUnionMember(memberId);
             Assert.IsNull(member);
         }
+
+        [Test]
+        public void TestPaySingleSalariedEmployee()
+        {
+            int empId = 1;
+            AddSalariedEmployee t = new AddSalariedEmployee(empId, "Kubing", "Home", 1000.00);
+            t.Execute();
+
+            DateTime payDate = new DateTime(2001, 11, 30);
+            PaydayTransaction pt = new PaydayTransaction(payDate);
+            pt.Execute();
+
+            Paycheck pc = pt.GetPaycheck(empId);
+            Assert.IsNotNull(pc);
+            Assert.AreEqual(payDate, pc.PayDate);
+            Assert.AreEqual(1000.00, pc.GrossPay, 0.001);
+            Assert.AreEqual("Hold", pc.GetField("Disposition"));
+            Assert.AreEqual(0.0, pc.Deductions, 0.001);
+            Assert.AreEqual(1000.00, pc.NetPay, 0.001);
+        }
+
+        [Test]
+        public void PaySingleSalariedEmployeeOnWrongDate()
+        {
+            int empId = 1;
+            AddSalariedEmployee t = new AddSalariedEmployee(empId, "Kubing", "Home", 1000.00);
+            t.Execute();
+
+            DateTime payDate = new DateTime(2001, 11, 29);
+            PaydayTransaction pt = new PaydayTransaction(payDate);
+            pt.Execute();
+
+            Paycheck pc = pt.GetPaycheck(empId);
+            Assert.IsNull(pc);
+        }
     }
 }

@@ -22,9 +22,8 @@ namespace APPPInCSharp_Payroll.Console
             serviceCharges[sc.Date] = sc;
         }
 
-        public ServiceCharge GetServiceCharge(DateTime date)
-        {
-            return serviceCharges[date] as ServiceCharge;
-        }
+        public ServiceCharge GetServiceCharge(DateTime date) => serviceCharges[date] as ServiceCharge;
+
+        public double CalculateDeductions(Paycheck paycheck) => 0.0;
     }
 }

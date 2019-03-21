@@ -20,5 +20,10 @@ namespace APPPInCSharp_Payroll.Console
         {
             timeCards[tc.Date] = tc;
         }
+
+        public double CalculatePay(Paycheck paycheck)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

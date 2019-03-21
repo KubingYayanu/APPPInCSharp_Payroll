@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace APPPInCSharp_Payroll.Console
 {
@@ -7,6 +9,8 @@ namespace APPPInCSharp_Payroll.Console
     {
         private static Hashtable employees = new Hashtable();
         private static Hashtable members = new Hashtable();
+
+        public static IList<int> GetAllEmployeeIds() => employees.Keys.Cast<int>().ToList();
 
         public static void AddEmployee(int id, Employee employee)
         {

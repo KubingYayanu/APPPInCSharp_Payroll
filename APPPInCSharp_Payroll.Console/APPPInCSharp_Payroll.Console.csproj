@@ -48,6 +48,7 @@
     <Compile Include="Affiliation\UnionAffiliation.cs" />
     <Compile Include="Methods\DirectMethod.cs" />
     <Compile Include="Methods\MailMethod.cs" />
+    <Compile Include="Models\Paycheck.cs" />
     <Compile Include="Models\SalesReceipt.cs" />
     <Compile Include="Models\ServiceCharge.cs" />
     <Compile Include="Models\TimeCard.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Transactions\ChangeSalariedTransaction.cs" />
     <Compile Include="Transactions\ChangeUnaffiliatedTransaction.cs" />
     <Compile Include="Transactions\DeleteEmployeeTransaction.cs" />
+    <Compile Include="Transactions\PaydayTransaction.cs" />
     <Compile Include="Transactions\SalesReceiptTransaction.cs" />
     <Compile Include="Transactions\ServiceChargeTransaction.cs" />
     <Compile Include="Transactions\TimeCardTransaction.cs" />

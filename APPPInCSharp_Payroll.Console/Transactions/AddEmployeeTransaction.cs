@@ -22,11 +22,13 @@
             PaymentClassification pc = MakeClassification();
             PaymentSchedule ps = MakeSchedule();
             PaymentMethod pm = new HoldMethod();
+            Affiliation af = new NoAffiliation();
 
             Employee e = new Employee(empid, name, address);
             e.Classification = pc;
             e.Schedule = ps;
             e.Method = pm;
+            e.Affiliation = af;
             PayrollDatabase.AddEmployee(empid, e);
         }
     }
