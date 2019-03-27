@@ -26,7 +26,18 @@ namespace APPPInCSharp_Payroll.Console
 
         public double CalculatePay(Paycheck paycheck)
         {
-            throw new NotImplementedException();
+            double totalPay = Salary;
+            foreach (SalesReceipt receipt in salesReceipts.Values)
+            {
+                bool isInPayPeriod = DateUtil.IsInPayPeriod(receipt.Date, paycheck.PayPeriodStart, paycheck.PayPeriodEnd);
+                if (isInPayPeriod)
+                {
+                    totalPay += CalculatePayForSalesReceipt(receipt);
+                }
+            }
+            return totalPay;
         }
+
+        private double CalculatePayForSalesReceipt(SalesReceipt receipt) => receipt.Amount * CommissionRate;
     }
 }

@@ -37,5 +37,7 @@ namespace APPPInCSharp_Payroll.Console
             paycheck.NetPay = netPay;
             Method.Pay(paycheck);
         }
+
+        public DateTime GetPayPeriodStartDate(DateTime date) => Schedule.GetPayPeriodStartDate(date);
     }
 }

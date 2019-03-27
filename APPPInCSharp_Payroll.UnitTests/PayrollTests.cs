@@ -148,7 +148,6 @@ namespace APPPInCSharp_Payroll.UnitTests
             Employee e = PayrollDatabase.GetEmployee(empId);
             Assert.IsNotNull(e);
 
-
             int memberId = 86;
             PayrollDatabase.AddUnionMember(memberId, e);
 
@@ -384,7 +383,7 @@ namespace APPPInCSharp_Payroll.UnitTests
 
             Paycheck pc = pt.GetPaycheck(empId);
             Assert.IsNotNull(pc);
-            Assert.AreEqual(payDate, pc.PayDate);
+            Assert.AreEqual(payDate, pc.PayPeriodEnd);
             Assert.AreEqual(1000.00, pc.GrossPay, 0.001);
             Assert.AreEqual("Hold", pc.GetField("Disposition"));
             Assert.AreEqual(0.0, pc.Deductions, 0.001);
@@ -407,13 +406,14 @@ namespace APPPInCSharp_Payroll.UnitTests
         }
 
         [Test]
-        public void TestPayingSingleHourlyEmployeeNoTimeCards()
+        public void TestPaySingleHourlyEmployeeNoTimeCards()
         {
             int empId = 2;
             AddHourlyEmployee t = new AddHourlyEmployee(empId, "Kubing", "Home", 15.25);
             t.Execute();
 
-            DateTime payDate = new DateTime(2001, 11, 9);
+            DateTime payDate = new DateTime(2001, 11, 9); //Friday
+
             PaydayTransaction pt = new PaydayTransaction(payDate);
             pt.Execute();
 
@@ -424,7 +424,7 @@ namespace APPPInCSharp_Payroll.UnitTests
         {
             Paycheck pc = pt.GetPaycheck(empId);
             Assert.IsNotNull(pc);
-            Assert.AreEqual(payDate, pc.PayDate);
+            Assert.AreEqual(payDate, pc.PayPeriodEnd);
             Assert.AreEqual(pay, pc.GrossPay, 0.01);
             Assert.AreEqual("Hold", pc.GetField("Disposition"));
             Assert.AreEqual(0.0, pc.Deductions, 0.01);
@@ -445,6 +445,7 @@ namespace APPPInCSharp_Payroll.UnitTests
 
             PaydayTransaction pt = new PaydayTransaction(payDate);
             pt.Execute();
+
             ValidateHourlyPaycheck(pt, empId, payDate, 30.5);
         }
 
@@ -526,6 +527,112 @@ namespace APPPInCSharp_Payroll.UnitTests
             pt.Execute();
 
             ValidateHourlyPaycheck(pt, empId, payDate, 2 * 15.25);
+        }
+
+        [Test]
+        public void TestPaySingleCommissionEmployeeWithNoSalesReceipt()
+        {
+            int empId = 4;
+            AddCommissionEmployee t = new AddCommissionEmployee(empId, "Kubing", "Home", 2000.0, 3.0);
+            t.Execute();
+
+            DateTime payDate = new DateTime(2001, 11, 16);
+
+            PaydayTransaction pt = new PaydayTransaction(payDate);
+            pt.Execute();
+
+            ValidateCommissionedPaycheck(pt, empId, payDate, 2000.0);
+        }
+
+        private void ValidateCommissionedPaycheck(PaydayTransaction pt, int empId, DateTime payDate, double pay)
+        {
+            Paycheck pc = pt.GetPaycheck(empId);
+            Assert.IsNotNull(pc);
+            Assert.AreEqual(payDate, pc.PayPeriodEnd);
+            Assert.AreEqual(pay, pc.GrossPay, 0.01);
+            Assert.AreEqual("Hold", pc.GetField("Disposition"));
+            Assert.AreEqual(0.0, pc.Deductions, 0.01);
+            Assert.AreEqual(pay, pc.NetPay, 0.01);
+        }
+
+        [Test]
+        public void TestPaySingleCommissionEmployeeOneSalesReceipt()
+        {
+            int empId = 5;
+            AddCommissionEmployee t = new AddCommissionEmployee(empId, "Kubing", "Home", 2000.0, 3.0);
+            t.Execute();
+
+            DateTime payDate = new DateTime(2001, 11, 16);
+
+            SalesReceiptTransaction srt = new SalesReceiptTransaction(payDate, 3, empId);
+            srt.Execute();
+
+            PaydayTransaction pt = new PaydayTransaction(payDate);
+            pt.Execute();
+
+            ValidateCommissionedPaycheck(pt, empId, payDate, 2000.0 + 3 * 3.0);
+        }
+
+        [Test]
+        public void TestPaySingleCommissionEmployeeOnWrongDate()
+        {
+            int empId = 5;
+            AddCommissionEmployee t = new AddCommissionEmployee(empId, "Kubing", "Home", 2000.0, 3.0);
+            t.Execute();
+
+            DateTime payDate = new DateTime(2001, 11, 15);
+
+            SalesReceiptTransaction srt = new SalesReceiptTransaction(payDate, 3, empId);
+            srt.Execute();
+
+            PaydayTransaction pt = new PaydayTransaction(payDate);
+            pt.Execute();
+
+            Paycheck pc = pt.GetPaycheck(empId);
+            Assert.IsNull(pc);
+        }
+
+        [Test]
+        public void TestPaySingleCommissionEmployeeTwoSalesReceipts()
+        {
+            int empId = 5;
+            AddCommissionEmployee t = new AddCommissionEmployee(empId, "Kubing", "Home", 2000.0, 3.0);
+            t.Execute();
+
+            DateTime payDate = new DateTime(2001, 11, 16);
+
+            SalesReceiptTransaction srt = new SalesReceiptTransaction(payDate, 3, empId);
+            srt.Execute();
+
+            SalesReceiptTransaction srt2 = new SalesReceiptTransaction(payDate.AddDays(-1), 12, empId);
+            srt2.Execute();
+
+            PaydayTransaction pt = new PaydayTransaction(payDate);
+            pt.Execute();
+
+            ValidateCommissionedPaycheck(pt, empId, payDate, 2000.0 + 15 * 3.0);
+        }
+
+        [Test]
+        public void TestPaySingleCommissionEmployeeWithSalesReceiptsSpanningTwoPayPeriods()
+        {
+            int empId = 5;
+            AddCommissionEmployee t = new AddCommissionEmployee(empId, "Kubing", "Home", 2000.0, 3.0);
+            t.Execute();
+
+            DateTime payDate = new DateTime(2001, 11, 16);
+            DateTime dateInPreviousPayPeriod = new DateTime(2001, 11, 1);
+
+            SalesReceiptTransaction srt = new SalesReceiptTransaction(payDate, 3, empId);
+            srt.Execute();
+
+            SalesReceiptTransaction srt2 = new SalesReceiptTransaction(dateInPreviousPayPeriod, 12, empId);
+            srt2.Execute();
+
+            PaydayTransaction pt = new PaydayTransaction(payDate);
+            pt.Execute();
+
+            ValidateCommissionedPaycheck(pt, empId, payDate, 2000.0 + 3 * 3.0);
         }
     }
 }

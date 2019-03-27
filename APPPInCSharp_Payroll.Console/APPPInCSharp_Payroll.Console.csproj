@@ -90,6 +90,7 @@
     <Compile Include="Transactions\Transaction.cs" />
     <Compile Include="Classifications\SalariedClassification.cs" />
     <Compile Include="Schedules\WeeklySchedule.cs" />
+    <Compile Include="Utilities\DateUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

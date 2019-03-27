@@ -4,12 +4,15 @@ namespace APPPInCSharp_Payroll.Console
 {
     public class Paycheck
     {
-        public Paycheck(DateTime payDate)
+        public Paycheck(DateTime payPeriodStart, DateTime payPeriodEnd)
         {
-            PayDate = payDate;
+            PayPeriodStart = payPeriodStart;
+            PayPeriodEnd = payPeriodEnd;
         }
 
-        public DateTime PayDate { get; set; }
+        public DateTime PayPeriodStart { get; set; }
+
+        public DateTime PayPeriodEnd { get; set; }
 
         public double GrossPay { get; set; }
 

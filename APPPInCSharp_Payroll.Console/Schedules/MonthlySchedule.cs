@@ -12,5 +12,10 @@ namespace APPPInCSharp_Payroll.Console
         }
 
         public bool IsPayDate(DateTime payDate) => IsLastDayOfMonth(payDate);
+
+        public DateTime GetPayPeriodStartDate(DateTime payDate)
+        {
+            return payDate.AddMonths(-1).AddDays(1);
+        }
     }
 }
