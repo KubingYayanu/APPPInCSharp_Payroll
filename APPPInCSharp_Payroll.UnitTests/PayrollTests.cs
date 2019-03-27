@@ -392,7 +392,7 @@ namespace APPPInCSharp_Payroll.UnitTests
         }
 
         [Test]
-        public void PaySingleSalariedEmployeeOnWrongDate()
+        public void TestPaySingleSalariedEmployeeOnWrongDate()
         {
             int empId = 1;
             AddSalariedEmployee t = new AddSalariedEmployee(empId, "Kubing", "Home", 1000.00);
@@ -404,6 +404,128 @@ namespace APPPInCSharp_Payroll.UnitTests
 
             Paycheck pc = pt.GetPaycheck(empId);
             Assert.IsNull(pc);
+        }
+
+        [Test]
+        public void TestPayingSingleHourlyEmployeeNoTimeCards()
+        {
+            int empId = 2;
+            AddHourlyEmployee t = new AddHourlyEmployee(empId, "Kubing", "Home", 15.25);
+            t.Execute();
+
+            DateTime payDate = new DateTime(2001, 11, 9);
+            PaydayTransaction pt = new PaydayTransaction(payDate);
+            pt.Execute();
+
+            ValidateHourlyPaycheck(pt, empId, payDate, 0.0);
+        }
+
+        private void ValidateHourlyPaycheck(PaydayTransaction pt, int empId, DateTime payDate, double pay)
+        {
+            Paycheck pc = pt.GetPaycheck(empId);
+            Assert.IsNotNull(pc);
+            Assert.AreEqual(payDate, pc.PayDate);
+            Assert.AreEqual(pay, pc.GrossPay, 0.01);
+            Assert.AreEqual("Hold", pc.GetField("Disposition"));
+            Assert.AreEqual(0.0, pc.Deductions, 0.01);
+            Assert.AreEqual(pay, pc.NetPay, 0.01);
+        }
+
+        [Test]
+        public void TestPaySingleHourlyEmployeeOneTimeCard()
+        {
+            int empId = 2;
+            AddHourlyEmployee t = new AddHourlyEmployee(empId, "Kubing", "Home", 15.25);
+            t.Execute();
+
+            DateTime payDate = new DateTime(2001, 11, 9); //Friday
+
+            TimeCardTransaction tct = new TimeCardTransaction(payDate, 2.0, empId);
+            tct.Execute();
+
+            PaydayTransaction pt = new PaydayTransaction(payDate);
+            pt.Execute();
+            ValidateHourlyPaycheck(pt, empId, payDate, 30.5);
+        }
+
+        [Test]
+        public void TestPaySingleHourlyEmployeeOvertimeOneTimeCard()
+        {
+            int empId = 2;
+            AddHourlyEmployee t = new AddHourlyEmployee(empId, "Kubing", "Home", 15.25);
+            t.Execute();
+
+            DateTime payDate = new DateTime(2001, 11, 9); //Friday
+
+            TimeCardTransaction tct = new TimeCardTransaction(payDate, 9.0, empId);
+            tct.Execute();
+
+            PaydayTransaction pt = new PaydayTransaction(payDate);
+            pt.Execute();
+
+            ValidateHourlyPaycheck(pt, empId, payDate, (8 + 1.5) * 15.25);
+        }
+
+        [Test]
+        public void TestPaySingleHourlyEmployeeOnWrongDate()
+        {
+            int empId = 2;
+            AddHourlyEmployee t = new AddHourlyEmployee(empId, "Kubing", "Home", 15.25);
+            t.Execute();
+
+            DateTime payDate = new DateTime(2001, 11, 8); //Thursday
+
+            TimeCardTransaction tct = new TimeCardTransaction(payDate, 9.0, empId);
+            tct.Execute();
+
+            PaydayTransaction pt = new PaydayTransaction(payDate);
+            pt.Execute();
+
+            Paycheck pc = pt.GetPaycheck(empId);
+            Assert.IsNull(pc);
+        }
+
+        [Test]
+        public void TestPaySingleHourlyEmployeeTwoCards()
+        {
+            int empId = 2;
+            AddHourlyEmployee t = new AddHourlyEmployee(empId, "Kubing", "Home", 15.25);
+            t.Execute();
+
+            DateTime payDate = new DateTime(2001, 11, 9); //Friday
+
+            TimeCardTransaction tct = new TimeCardTransaction(payDate, 2.0, empId);
+            tct.Execute();
+
+            TimeCardTransaction tct2 = new TimeCardTransaction(payDate.AddDays(-1), 5.0, empId);
+            tct2.Execute();
+
+            PaydayTransaction pt = new PaydayTransaction(payDate);
+            pt.Execute();
+
+            ValidateHourlyPaycheck(pt, empId, payDate, 7 * 15.25);
+        }
+
+        [Test]
+        public void TestPaySingleHourlyEmployeeWithTimeCardsSpanningTwoPayPeriods()
+        {
+            int empId = 3;
+            AddHourlyEmployee t = new AddHourlyEmployee(empId, "Kubing", "Home", 15.25);
+            t.Execute();
+
+            DateTime payDate = new DateTime(2001, 11, 9); //Friday
+            DateTime dateInPreviousPayPeriod = new DateTime(2001, 11, 2);
+
+            TimeCardTransaction tct = new TimeCardTransaction(payDate, 2.0, empId);
+            tct.Execute();
+
+            TimeCardTransaction tct2 = new TimeCardTransaction(dateInPreviousPayPeriod, 5.0, empId);
+            tct2.Execute();
+
+            PaydayTransaction pt = new PaydayTransaction(payDate);
+            pt.Execute();
+
+            ValidateHourlyPaycheck(pt, empId, payDate, 2 * 15.25);
         }
     }
 }
