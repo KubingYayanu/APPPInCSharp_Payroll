@@ -15,7 +15,7 @@ namespace APPPInCSharp_Payroll.Console
 
         public string Name { get; set; }
 
-        public string Address { get; set; }
+        public string Address { get; }
 
         public PaymentClassification Classification { get; set; }
 
