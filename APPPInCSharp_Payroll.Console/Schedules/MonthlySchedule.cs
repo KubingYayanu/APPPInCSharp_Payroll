@@ -15,7 +15,7 @@ namespace APPPInCSharp_Payroll.Console
 
         public DateTime GetPayPeriodStartDate(DateTime payDate)
         {
-            return payDate.AddMonths(-1).AddDays(1);
+            return payDate.AddDays(1).AddMonths(-1);
         }
     }
 }
