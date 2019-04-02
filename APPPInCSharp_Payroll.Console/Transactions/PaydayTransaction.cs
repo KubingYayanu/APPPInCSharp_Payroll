@@ -20,7 +20,7 @@ namespace APPPInCSharp_Payroll.Console
             foreach (var empId in empIds)
             {
                 Employee employee = PayrollDatabase.GetEmployee(empId);
-                if (employee.IsPayDate(payDate))
+                if (employee != null && employee.IsPayDate(payDate))
                 {
                     DateTime startDate = employee.GetPayPeriodStartDate(payDate);
                     Paycheck pc = new Paycheck(startDate, payDate);
