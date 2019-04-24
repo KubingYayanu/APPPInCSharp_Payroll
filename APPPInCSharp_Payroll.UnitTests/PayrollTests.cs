@@ -12,7 +12,7 @@ namespace APPPInCSharp_Payroll.UnitTests
         [SetUp]
         public void SetUp()
         {
-            database = new PayrollDatabase();
+            database = new InMemoryPayrollDatabase();
         }
 
         [Test]

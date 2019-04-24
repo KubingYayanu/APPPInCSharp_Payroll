@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace APPPInCSharp_Payroll.Console
 {
-    public class PayrollDatabase
+    public class InMemoryPayrollDatabase : PayrollDatabase
     {
         private static Hashtable employees = new Hashtable();
         private static Hashtable members = new Hashtable();
@@ -17,7 +17,7 @@ namespace APPPInCSharp_Payroll.Console
             return employees.Keys.Cast<int>().ToList();
         }
 
-        public void Addemployee(Employee employee)
+        public void AddEmployee(Employee employee)
         {
             employees[employee.EmpId] = employee;
         }
