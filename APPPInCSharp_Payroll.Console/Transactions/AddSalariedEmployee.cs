@@ -4,8 +4,8 @@
     {
         private readonly double salary;
 
-        public AddSalariedEmployee(int empid, string name, string address, double salary)
-            : base(empid, name, address)
+        public AddSalariedEmployee(int empid, string name, string address, double salary, PayrollDatabase database)
+            : base(empid, name, address, database)
         {
             this.salary = salary;
         }

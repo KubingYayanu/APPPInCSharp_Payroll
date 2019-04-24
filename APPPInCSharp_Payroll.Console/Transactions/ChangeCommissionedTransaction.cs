@@ -5,8 +5,8 @@
         private readonly double salary;
         private readonly double commissionRate;
 
-        public ChangeCommissionedTransaction(int empId, double salary, double commissionRate)
-            : base(empId)
+        public ChangeCommissionedTransaction(int empId, double salary, double commissionRate, PayrollDatabase database)
+            : base(empId, database)
         {
             this.salary = salary;
             this.commissionRate = commissionRate;

@@ -2,8 +2,8 @@
 {
     public class ChangeMailTransaction : ChangeMethodTransaction
     {
-        public ChangeMailTransaction(int empId)
-            : base(empId)
+        public ChangeMailTransaction(int empId, PayrollDatabase database)
+            : base(empId, database)
         {
         }
 

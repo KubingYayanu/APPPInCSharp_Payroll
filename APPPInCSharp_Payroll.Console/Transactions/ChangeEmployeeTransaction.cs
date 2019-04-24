@@ -6,14 +6,15 @@ namespace APPPInCSharp_Payroll.Console
     {
         private readonly int empId;
 
-        public ChangeEmployeeTransaction(int empId)
+        public ChangeEmployeeTransaction(int empId, PayrollDatabase database)
+            : base(database)
         {
             this.empId = empId;
         }
 
-        public void Execute()
+        public override void Execute()
         {
-            Employee e = PayrollDatabase.GetEmployee(empId);
+            Employee e = PayrollDatabase.Instance.GetEmployee(empId);
 
             if (e != null)
             {

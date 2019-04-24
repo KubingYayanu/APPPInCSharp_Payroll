@@ -6,8 +6,8 @@
         private double commissionRate;
 
         public AddCommissionEmployee(int empid, string name
-            , string address, double salary, double commissionRate)
-            : base(empid, name, address)
+            , string address, double salary, double commissionRate, PayrollDatabase database)
+            : base(empid, name, address, database)
         {
             this.salary = salary;
             this.commissionRate = commissionRate;

@@ -6,7 +6,8 @@
         private readonly string name;
         private readonly string address;
 
-        public AddEmployeeTransaction(int empid, string name, string address)
+        public AddEmployeeTransaction(int empid, string name, string address, PayrollDatabase database)
+            : base(database)
         {
             this.empid = empid;
             this.name = name;
@@ -17,7 +18,7 @@
 
         protected abstract PaymentSchedule MakeSchedule();
 
-        public void Execute()
+        public override void Execute()
         {
             PaymentClassification pc = MakeClassification();
             PaymentSchedule ps = MakeSchedule();
@@ -29,7 +30,7 @@
             e.Schedule = ps;
             e.Method = pm;
             e.Affiliation = af;
-            PayrollDatabase.AddEmployee(empid, e);
+            PayrollDatabase.Instance.Addemployee(e);
         }
     }
 }

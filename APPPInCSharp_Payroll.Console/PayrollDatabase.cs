@@ -9,35 +9,50 @@ namespace APPPInCSharp_Payroll.Console
     {
         private static Hashtable employees = new Hashtable();
         private static Hashtable members = new Hashtable();
+        public static PayrollDatabase Instance = new PayrollDatabase();
 
-        public static IList<int> GetAllEmployeeIds() => employees.Keys.Cast<int>().ToList();
+        #region Employee
 
-        public static void AddEmployee(int id, Employee employee)
+        public IList<int> GetAllEmployeeIds()
         {
-            employees[id] = employee;
+            return employees.Keys.Cast<int>().ToList();
         }
 
-        public static Employee GetEmployee(int id) => employees[id] as Employee;
+        public void Addemployee(Employee employee)
+        {
+            employees[employee.EmpId] = employee;
+        }
 
-        public static void DeleteEmployee(int id)
+        public Employee GetEmployee(int id)
+        {
+            return employees[id] as Employee;
+        }
+
+        public void DeleteEmployee(int id)
         {
             employees[id] = null;
         }
 
-        public static Employee GetUnionMember(int memberId)
+        #endregion Employee
+
+        #region UnionMember
+
+        public Employee GetUnionMember(int memberId)
         {
             var empId = Convert.ToInt32(members[memberId]);
             return employees[empId] as Employee;
         }
 
-        public static void AddUnionMember(int memberId, Employee e)
+        public void AddUnionMember(int memberId, Employee e)
         {
             members[memberId] = e.EmpId;
         }
 
-        public static void RemoveUnionMember(int memberId)
+        public void RemoveUnionMember(int memberId)
         {
             members[memberId] = null;
         }
+
+        #endregion UnionMember
     }
 }

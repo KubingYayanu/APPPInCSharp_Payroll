@@ -4,8 +4,8 @@
     {
         private readonly string newName;
 
-        public ChangeNameTransaction(int empId, string name)
-            : base(empId)
+        public ChangeNameTransaction(int empId, string name, PayrollDatabase database)
+            : base(empId, database)
         {
             newName = name;
         }

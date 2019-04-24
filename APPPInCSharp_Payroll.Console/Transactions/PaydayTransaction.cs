@@ -5,7 +5,8 @@ namespace APPPInCSharp_Payroll.Console
 {
     public class PaydayTransaction : Transaction
     {
-        public PaydayTransaction(DateTime payDate)
+        public PaydayTransaction(DateTime payDate, PayrollDatabase database)
+            : base(database)
         {
             this.payDate = payDate;
         }
@@ -14,12 +15,12 @@ namespace APPPInCSharp_Payroll.Console
 
         private readonly Hashtable paychecks = new Hashtable();
 
-        public void Execute()
+        public override void Execute()
         {
-            var empIds = PayrollDatabase.GetAllEmployeeIds();
+            var empIds = PayrollDatabase.Instance.GetAllEmployeeIds();
             foreach (var empId in empIds)
             {
-                Employee employee = PayrollDatabase.GetEmployee(empId);
+                Employee employee = PayrollDatabase.Instance.GetEmployee(empId);
                 if (employee != null && employee.IsPayDate(payDate))
                 {
                     DateTime startDate = employee.GetPayPeriodStartDate(payDate);

@@ -2,8 +2,8 @@
 {
     public class ChangeDirectTransaction : ChangeMethodTransaction
     {
-        public ChangeDirectTransaction(int empId)
-            : base(empId)
+        public ChangeDirectTransaction(int empId, PayrollDatabase database)
+            : base(empId, database)
         {
         }
 

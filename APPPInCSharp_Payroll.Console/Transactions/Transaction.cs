@@ -1,7 +1,14 @@
 ﻿namespace APPPInCSharp_Payroll.Console
 {
-    public interface Transaction
+    public abstract class Transaction
     {
-        void Execute();
+        public Transaction(PayrollDatabase database)
+        {
+            this.database = database;
+        }
+
+        protected readonly PayrollDatabase database;
+
+        public abstract void Execute();
     }
 }

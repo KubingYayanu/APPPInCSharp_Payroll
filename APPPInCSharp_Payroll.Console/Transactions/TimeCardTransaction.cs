@@ -8,16 +8,17 @@ namespace APPPInCSharp_Payroll.Console
         private readonly double hours;
         private readonly int empId;
 
-        public TimeCardTransaction(DateTime date, double hours, int empId)
+        public TimeCardTransaction(DateTime date, double hours, int empId, PayrollDatabase database)
+            : base(database)
         {
             this.date = date;
             this.hours = hours;
             this.empId = empId;
         }
 
-        public void Execute()
+        public override void Execute()
         {
-            Employee e = PayrollDatabase.GetEmployee(empId);
+            Employee e = PayrollDatabase.Instance.GetEmployee(empId);
 
             if (e != null)
             {

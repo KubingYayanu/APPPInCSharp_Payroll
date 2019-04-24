@@ -2,8 +2,8 @@
 {
     public class ChangeUnaffiliatedTransaction : ChangeAffiliationTransaction
     {
-        public ChangeUnaffiliatedTransaction(int empId)
-            : base(empId)
+        public ChangeUnaffiliatedTransaction(int empId, PayrollDatabase database)
+            : base(empId, database)
         {
         }
 
@@ -16,7 +16,7 @@
             {
                 UnionAffiliation ua = affiliation as UnionAffiliation;
                 int memberId = ua.MemberId;
-                PayrollDatabase.RemoveUnionMember(memberId);
+                PayrollDatabase.Instance.RemoveUnionMember(memberId);
             }
         }
     }

@@ -2,8 +2,8 @@
 {
     public abstract class ChangeMethodTransaction : ChangeEmployeeTransaction
     {
-        public ChangeMethodTransaction(int empId)
-            : base(empId)
+        public ChangeMethodTransaction(int empId, PayrollDatabase database)
+            : base(empId, database)
         {
         }
 

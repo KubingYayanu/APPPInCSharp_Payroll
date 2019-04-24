@@ -8,16 +8,17 @@ namespace APPPInCSharp_Payroll.Console
         private readonly DateTime time;
         private readonly double charge;
 
-        public ServiceChargeTransaction(int memberId, DateTime time, double charge)
+        public ServiceChargeTransaction(int memberId, DateTime time, double charge, PayrollDatabase database)
+            : base(database)
         {
             this.memberId = memberId;
             this.time = time;
             this.charge = charge;
         }
 
-        public void Execute()
+        public override void Execute()
         {
-            Employee e = PayrollDatabase.GetUnionMember(memberId);
+            Employee e = PayrollDatabase.Instance.GetUnionMember(memberId);
             if (e != null)
             {
                 UnionAffiliation ua = null;

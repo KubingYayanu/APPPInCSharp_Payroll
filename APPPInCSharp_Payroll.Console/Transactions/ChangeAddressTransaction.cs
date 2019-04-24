@@ -4,8 +4,8 @@
     {
         private readonly string address;
 
-        public ChangeAddressTransaction(int empId, string address)
-            : base(empId)
+        public ChangeAddressTransaction(int empId, string address, PayrollDatabase database)
+            : base(empId, database)
         {
             this.address = address;
         }

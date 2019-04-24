@@ -4,14 +4,15 @@
     {
         private readonly int empid;
 
-        public DeleteEmployeeTransaction(int empid)
+        public DeleteEmployeeTransaction(int empid, PayrollDatabase database)
+            : base(database)
         {
             this.empid = empid;
         }
 
-        public void Execute()
+        public override void Execute()
         {
-            PayrollDatabase.DeleteEmployee(empid);
+            PayrollDatabase.Instance.DeleteEmployee(empid);
         }
     }
 }

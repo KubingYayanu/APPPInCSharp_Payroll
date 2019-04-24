@@ -2,8 +2,8 @@
 {
     public class ChangeHoldTransaction : ChangeMethodTransaction
     {
-        public ChangeHoldTransaction(int empId)
-            : base(empId)
+        public ChangeHoldTransaction(int empId, PayrollDatabase database)
+            : base(empId, database)
         {
         }
 
