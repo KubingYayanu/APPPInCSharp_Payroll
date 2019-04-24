@@ -23,3 +23,178 @@
 ### 從屬關係 Affiliation
 
 * 員工可以從屬許多組織，並自動從該員工薪水中支付組織的費用
+
+## DB Schema
+
+```sql
+USE [Payroll]
+GO
+/****** Object:  Table [dbo].[Affiliation]    Script Date: 2019/4/23 下午 11:55:15 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Affiliation](
+    [Id] [int] NOT NULL,
+    [Dues] [decimal](18, 0) NULL,
+PRIMARY KEY CLUSTERED 
+(
+    [Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[CommissionedClassification]    Script Date: 2019/4/23 下午 11:55:15 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[CommissionedClassification](
+    [Salary] [decimal](18, 0) NULL,
+    [Commission] [decimal](18, 0) NULL,
+    [EmpId] [int] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[DirectDepositAccount]    Script Date: 2019/4/23 下午 11:55:15 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DirectDepositAccount](
+    [Bank] [nvarchar](50) NULL,
+    [Account] [nvarchar](50) NULL,
+    [EmpId] [int] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Employee]    Script Date: 2019/4/23 下午 11:55:15 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Employee](
+    [EmpId] [int] NOT NULL,
+    [Name] [nvarchar](50) NULL,
+    [Address] [nvarchar](50) NULL,
+    [ScheduleType] [nvarchar](50) NULL,
+    [PaymentMethodType] [nvarchar](50) NULL,
+    [PaymentClassificationType] [nvarchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[EmpId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[EmployeeAffiliation]    Script Date: 2019/4/23 下午 11:55:15 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[EmployeeAffiliation](
+    [EmpId] [int] NOT NULL,
+    [AffiliationId] [int] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[HourlyClassification]    Script Date: 2019/4/23 下午 11:55:15 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[HourlyClassification](
+    [HourlyRate] [decimal](18, 0) NULL,
+    [EmpId] [int] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[PaycheckAddress]    Script Date: 2019/4/23 下午 11:55:15 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PaycheckAddress](
+    [Address] [nvarchar](50) NULL,
+    [EmpId] [int] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[SalariedClassification]    Script Date: 2019/4/23 下午 11:55:15 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SalariedClassification](
+    [Salary] [decimal](18, 0) NULL,
+    [EmpId] [int] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[SalesReceipt]    Script Date: 2019/4/23 下午 11:55:15 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SalesReceipt](
+    [Date] [datetime] NULL,
+    [Amount] [int] NULL,
+    [EmpId] [int] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[ServiceCharge]    Script Date: 2019/4/23 下午 11:55:15 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ServiceCharge](
+    [Date] [datetime] NULL,
+    [Amount] [decimal](18, 0) NULL,
+    [AffiliationId] [int] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[TimeCard]    Script Date: 2019/4/23 下午 11:55:15 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TimeCard](
+    [Date] [datetime] NULL,
+    [Hours] [decimal](18, 0) NULL,
+    [EmpId] [int] NOT NULL
+) ON [PRIMARY]
+
+GO
+ALTER TABLE [dbo].[CommissionedClassification]  WITH CHECK ADD FOREIGN KEY([EmpId])
+REFERENCES [dbo].[Employee] ([EmpId])
+GO
+ALTER TABLE [dbo].[DirectDepositAccount]  WITH CHECK ADD FOREIGN KEY([EmpId])
+REFERENCES [dbo].[Employee] ([EmpId])
+GO
+ALTER TABLE [dbo].[EmployeeAffiliation]  WITH CHECK ADD FOREIGN KEY([AffiliationId])
+REFERENCES [dbo].[Affiliation] ([Id])
+GO
+ALTER TABLE [dbo].[EmployeeAffiliation]  WITH CHECK ADD FOREIGN KEY([EmpId])
+REFERENCES [dbo].[Employee] ([EmpId])
+GO
+ALTER TABLE [dbo].[HourlyClassification]  WITH CHECK ADD FOREIGN KEY([EmpId])
+REFERENCES [dbo].[Employee] ([EmpId])
+GO
+ALTER TABLE [dbo].[PaycheckAddress]  WITH CHECK ADD FOREIGN KEY([EmpId])
+REFERENCES [dbo].[Employee] ([EmpId])
+GO
+ALTER TABLE [dbo].[SalariedClassification]  WITH CHECK ADD FOREIGN KEY([EmpId])
+REFERENCES [dbo].[Employee] ([EmpId])
+GO
+ALTER TABLE [dbo].[SalesReceipt]  WITH CHECK ADD FOREIGN KEY([EmpId])
+REFERENCES [dbo].[Employee] ([EmpId])
+GO
+ALTER TABLE [dbo].[ServiceCharge]  WITH CHECK ADD FOREIGN KEY([AffiliationId])
+REFERENCES [dbo].[Affiliation] ([Id])
+GO
+ALTER TABLE [dbo].[TimeCard]  WITH CHECK ADD FOREIGN KEY([EmpId])
+REFERENCES [dbo].[Employee] ([EmpId])
+GO
+```
