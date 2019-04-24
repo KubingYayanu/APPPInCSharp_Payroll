@@ -18,7 +18,7 @@ namespace APPPInCSharp_Payroll.Console
 
         public override void Execute()
         {
-            Employee e = PayrollDatabase.Instance.GetUnionMember(memberId);
+            Employee e = database.GetUnionMember(memberId);
             if (e != null)
             {
                 UnionAffiliation ua = null;

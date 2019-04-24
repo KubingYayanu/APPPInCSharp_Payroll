@@ -16,7 +16,7 @@
 
         protected override void RecordMembership(Employee e)
         {
-            PayrollDatabase.Instance.AddUnionMember(memberId, e);
+            database.AddUnionMember(memberId, e);
         }
     }
 }

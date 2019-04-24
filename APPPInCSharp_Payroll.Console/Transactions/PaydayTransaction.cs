@@ -17,10 +17,10 @@ namespace APPPInCSharp_Payroll.Console
 
         public override void Execute()
         {
-            var empIds = PayrollDatabase.Instance.GetAllEmployeeIds();
+            var empIds = database.GetAllEmployeeIds();
             foreach (var empId in empIds)
             {
-                Employee employee = PayrollDatabase.Instance.GetEmployee(empId);
+                Employee employee = database.GetEmployee(empId);
                 if (employee != null && employee.IsPayDate(payDate))
                 {
                     DateTime startDate = employee.GetPayPeriodStartDate(payDate);

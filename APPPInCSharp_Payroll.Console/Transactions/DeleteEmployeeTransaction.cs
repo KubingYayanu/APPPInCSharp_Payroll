@@ -12,7 +12,7 @@
 
         public override void Execute()
         {
-            PayrollDatabase.Instance.DeleteEmployee(empid);
+            database.DeleteEmployee(empid);
         }
     }
 }

@@ -16,7 +16,7 @@
             {
                 UnionAffiliation ua = affiliation as UnionAffiliation;
                 int memberId = ua.MemberId;
-                PayrollDatabase.Instance.RemoveUnionMember(memberId);
+                database.RemoveUnionMember(memberId);
             }
         }
     }

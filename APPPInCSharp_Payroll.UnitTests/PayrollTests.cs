@@ -22,7 +22,7 @@ namespace APPPInCSharp_Payroll.UnitTests
             AddSalariedEmployee t = new AddSalariedEmployee(empId, "Kubing", "Home", 1000.00, database);
             t.Execute();
 
-            Employee e = PayrollDatabase.Instance.GetEmployee(empId);
+            Employee e = database.GetEmployee(empId);
             Assert.That("Kubing", Is.EqualTo(e.Name));
 
             PaymentClassification pc = e.Classification;
@@ -45,7 +45,7 @@ namespace APPPInCSharp_Payroll.UnitTests
             AddHourlyEmployee t = new AddHourlyEmployee(empId, "Kubing", "Home", 50.00, database);
             t.Execute();
 
-            Employee e = PayrollDatabase.Instance.GetEmployee(empId);
+            Employee e = database.GetEmployee(empId);
             Assert.That("Kubing", Is.EqualTo(e.Name));
 
             PaymentClassification pc = e.Classification;
@@ -68,7 +68,7 @@ namespace APPPInCSharp_Payroll.UnitTests
             AddCommissionEmployee t = new AddCommissionEmployee(empId, "Kubing", "Home", 500.00, 80.00, database);
             t.Execute();
 
-            Employee e = PayrollDatabase.Instance.GetEmployee(empId);
+            Employee e = database.GetEmployee(empId);
             Assert.That("Kubing", Is.EqualTo(e.Name));
 
             PaymentClassification pc = e.Classification;
@@ -92,13 +92,13 @@ namespace APPPInCSharp_Payroll.UnitTests
             AddCommissionEmployee t = new AddCommissionEmployee(empId, "Kubing", "Home", 2500, 3.2, database);
             t.Execute();
 
-            Employee e = PayrollDatabase.Instance.GetEmployee(empId);
+            Employee e = database.GetEmployee(empId);
             Assert.That(e, Is.Not.Null);
 
             DeleteEmployeeTransaction dt = new DeleteEmployeeTransaction(empId, database);
             dt.Execute();
 
-            Employee e2 = PayrollDatabase.Instance.GetEmployee(empId);
+            Employee e2 = database.GetEmployee(empId);
             Assert.That(e2, Is.Null);
         }
 
@@ -112,7 +112,7 @@ namespace APPPInCSharp_Payroll.UnitTests
             TimeCardTransaction tct = new TimeCardTransaction(new DateTime(2005, 7, 31), 8.0, empId, database);
             tct.Execute();
 
-            Employee e = PayrollDatabase.Instance.GetEmployee(empId);
+            Employee e = database.GetEmployee(empId);
             Assert.IsNotNull(e);
 
             PaymentClassification pc = e.Classification;
@@ -134,7 +134,7 @@ namespace APPPInCSharp_Payroll.UnitTests
             SalesReceiptTransaction srt = new SalesReceiptTransaction(new DateTime(2017, 3, 19), 4, empId, database);
             srt.Execute();
 
-            Employee e = PayrollDatabase.Instance.GetEmployee(empId);
+            Employee e = database.GetEmployee(empId);
             Assert.IsNotNull(e);
 
             PaymentClassification pc = e.Classification;
@@ -153,11 +153,11 @@ namespace APPPInCSharp_Payroll.UnitTests
             AddHourlyEmployee t = new AddHourlyEmployee(empId, "Kubing", "Home", 15.25, database);
             t.Execute();
 
-            Employee e = PayrollDatabase.Instance.GetEmployee(empId);
+            Employee e = database.GetEmployee(empId);
             Assert.IsNotNull(e);
 
             int memberId = 86;
-            PayrollDatabase.Instance.AddUnionMember(memberId, e);
+            database.AddUnionMember(memberId, e);
 
             UnionAffiliation ua = new UnionAffiliation(memberId, 99.52);
             e.Affiliation = ua;
@@ -180,7 +180,7 @@ namespace APPPInCSharp_Payroll.UnitTests
             ChangeNameTransaction cnt = new ChangeNameTransaction(empId, "Yuling", database);
             cnt.Execute();
 
-            Employee e = PayrollDatabase.Instance.GetEmployee(empId);
+            Employee e = database.GetEmployee(empId);
 
             Assert.IsNotNull(e);
             Assert.AreEqual("Yuling", e.Name);
@@ -196,7 +196,7 @@ namespace APPPInCSharp_Payroll.UnitTests
             ChangeAddressTransaction cat = new ChangeAddressTransaction(empId, "Company", database);
             cat.Execute();
 
-            Employee e = PayrollDatabase.Instance.GetEmployee(empId);
+            Employee e = database.GetEmployee(empId);
 
             Assert.IsNotNull(e);
             Assert.AreEqual("Company", e.Address);
@@ -212,7 +212,7 @@ namespace APPPInCSharp_Payroll.UnitTests
             ChangeHourlyTransaction cht = new ChangeHourlyTransaction(empId, 27.52, database);
             cht.Execute();
 
-            Employee e = PayrollDatabase.Instance.GetEmployee(empId);
+            Employee e = database.GetEmployee(empId);
             Assert.IsNotNull(e);
 
             PaymentClassification pc = e.Classification;
@@ -236,7 +236,7 @@ namespace APPPInCSharp_Payroll.UnitTests
             ChangeSalariedTransaction cst = new ChangeSalariedTransaction(empId, 1000.00, database);
             cst.Execute();
 
-            Employee e = PayrollDatabase.Instance.GetEmployee(empId);
+            Employee e = database.GetEmployee(empId);
             Assert.IsNotNull(e);
 
             PaymentClassification pc = e.Classification;
@@ -260,7 +260,7 @@ namespace APPPInCSharp_Payroll.UnitTests
             ChangeCommissionedTransaction cct = new ChangeCommissionedTransaction(empId, 2000.00, 3.8, database);
             cct.Execute();
 
-            Employee e = PayrollDatabase.Instance.GetEmployee(empId);
+            Employee e = database.GetEmployee(empId);
             Assert.IsNotNull(e);
 
             PaymentClassification pc = e.Classification;
@@ -285,7 +285,7 @@ namespace APPPInCSharp_Payroll.UnitTests
             ChangeDirectTransaction cdt = new ChangeDirectTransaction(empId, database);
             cdt.Execute();
 
-            Employee e = PayrollDatabase.Instance.GetEmployee(empId);
+            Employee e = database.GetEmployee(empId);
             Assert.IsNotNull(e);
 
             PaymentMethod pm = e.Method;
@@ -303,7 +303,7 @@ namespace APPPInCSharp_Payroll.UnitTests
             ChangeMailTransaction cmt = new ChangeMailTransaction(empId, database);
             cmt.Execute();
 
-            Employee e = PayrollDatabase.Instance.GetEmployee(empId);
+            Employee e = database.GetEmployee(empId);
             Assert.IsNotNull(e);
 
             PaymentMethod pm = e.Method;
@@ -321,7 +321,7 @@ namespace APPPInCSharp_Payroll.UnitTests
             ChangeHoldTransaction cmt = new ChangeHoldTransaction(empId, database);
             cmt.Execute();
 
-            Employee e = PayrollDatabase.Instance.GetEmployee(empId);
+            Employee e = database.GetEmployee(empId);
             Assert.IsNotNull(e);
 
             PaymentMethod pm = e.Method;
@@ -340,7 +340,7 @@ namespace APPPInCSharp_Payroll.UnitTests
             ChangeMemberTransaction cmt = new ChangeMemberTransaction(empId, memberId, 99.42, database);
             cmt.Execute();
 
-            Employee e = PayrollDatabase.Instance.GetEmployee(empId);
+            Employee e = database.GetEmployee(empId);
             Affiliation affiliation = e.Affiliation;
             Assert.IsNotNull(e);
             Assert.IsNotNull(affiliation);
@@ -349,7 +349,7 @@ namespace APPPInCSharp_Payroll.UnitTests
             UnionAffiliation ua = e.Affiliation as UnionAffiliation;
             Assert.AreEqual(99.42, ua.Dues, 0.001);
 
-            Employee member = PayrollDatabase.Instance.GetUnionMember(memberId);
+            Employee member = database.GetUnionMember(memberId);
             Assert.IsNotNull(member);
             Assert.AreEqual(e, member);
         }
@@ -368,13 +368,13 @@ namespace APPPInCSharp_Payroll.UnitTests
             ChangeUnaffiliatedTransaction cut = new ChangeUnaffiliatedTransaction(empId, database);
             cut.Execute();
 
-            Employee e = PayrollDatabase.Instance.GetEmployee(empId);
+            Employee e = database.GetEmployee(empId);
             Affiliation affiliation = e.Affiliation;
             Assert.IsNotNull(e);
             Assert.IsNotNull(affiliation);
             Assert.IsTrue(affiliation is NoAffiliation);
 
-            Employee member = PayrollDatabase.Instance.GetUnionMember(memberId);
+            Employee member = database.GetUnionMember(memberId);
             Assert.IsNull(member);
         }
 

@@ -9,7 +9,6 @@ namespace APPPInCSharp_Payroll.Console
     {
         private static Hashtable employees = new Hashtable();
         private static Hashtable members = new Hashtable();
-        public static PayrollDatabase Instance = new PayrollDatabase();
 
         #region Employee
 

@@ -18,7 +18,7 @@ namespace APPPInCSharp_Payroll.Console
 
         public override void Execute()
         {
-            Employee e = PayrollDatabase.Instance.GetEmployee(empId);
+            Employee e = database.GetEmployee(empId);
 
             if (e != null)
             {

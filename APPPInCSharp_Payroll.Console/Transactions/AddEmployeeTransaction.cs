@@ -30,7 +30,7 @@
             e.Schedule = ps;
             e.Method = pm;
             e.Affiliation = af;
-            PayrollDatabase.Instance.Addemployee(e);
+            database.Addemployee(e);
         }
     }
 }
