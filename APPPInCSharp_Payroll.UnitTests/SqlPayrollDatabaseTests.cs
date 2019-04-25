@@ -211,5 +211,19 @@ namespace APPPInCSharp_Payroll.UnitTests
             Assert.AreEqual(150.00, double.Parse(row["HourlyRate"].ToString()), .01);
             Assert.AreEqual(123, row["EmpId"]);
         }
+
+        [Test]
+        public void SaveMailMethodThenHoldMethod()
+        {
+            employee.Method = new MailMethod("123 Baker St.");
+            database.AddEmployee(employee);
+
+            Employee employee2 = new Employee(321, "Ed", "456 Elm St.");
+            employee2.Method = new HoldMethod();
+            database.AddEmployee(employee2);
+
+            var table = LoadTable("PaycheckAddress");
+            Assert.AreEqual(1, table.Rows.Count);
+        }
     }
 }
