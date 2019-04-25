@@ -1,5 +1,6 @@
 ﻿using APPPInCSharp_Payroll.Console;
 using NUnit.Framework;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -21,10 +22,8 @@ namespace APPPInCSharp_Payroll.UnitTests
             string connectionString = @"Initial Catalog=Payroll;Data Source=10.0.75.1;user id=dev;password=sa;";
             connection = new SqlConnection(connectionString);
             connection.Open();
-
-            ClearPaycheckAddressTable();
-            ClearDirectDepositAccountTable();
-            ClearEmployeeTable();
+            
+            ClearAllTable();
 
             employee = new Employee(123, "Kubing", "123 Baker St.");
             employee.Schedule = new MonthlySchedule();
@@ -32,19 +31,14 @@ namespace APPPInCSharp_Payroll.UnitTests
             employee.Classification = new SalariedClassification(1000.00);
         }
 
-        private void ClearEmployeeTable()
+        private void ClearAllTable()
         {
-            new SqlCommand("delete from Employee", connection).ExecuteNonQuery();
-        }
-
-        private void ClearDirectDepositAccountTable()
-        {
-            new SqlCommand("delete from DirectDepositAccount", connection).ExecuteNonQuery();
-        }
-
-        private void ClearPaycheckAddressTable()
-        {
+            new SqlCommand("delete from HourlyClassification", connection).ExecuteNonQuery();
+            new SqlCommand("delete from CommissionedClassification", connection).ExecuteNonQuery();
+            new SqlCommand("delete from SalariedClassification", connection).ExecuteNonQuery();
             new SqlCommand("delete from PaycheckAddress", connection).ExecuteNonQuery();
+            new SqlCommand("delete from DirectDepositAccount", connection).ExecuteNonQuery();
+            new SqlCommand("delete from Employee", connection).ExecuteNonQuery();
         }
 
         private DataTable LoadTable(string tableName)
@@ -82,13 +76,9 @@ namespace APPPInCSharp_Payroll.UnitTests
         public void ScheduleGetsSaved()
         {
             CheckSavedScheduleCode(new MonthlySchedule(), "monthly");
-            ClearPaycheckAddressTable();
-            ClearDirectDepositAccountTable();
-            ClearEmployeeTable();
+            ClearAllTable();
             CheckSavedScheduleCode(new WeeklySchedule(), "weekly");
-            ClearPaycheckAddressTable();
-            ClearDirectDepositAccountTable();
-            ClearEmployeeTable();
+            ClearAllTable();
             CheckSavedScheduleCode(new BiweeklySchedule(), "biweekly");
         }
 
@@ -106,13 +96,9 @@ namespace APPPInCSharp_Payroll.UnitTests
         public void PaymentMethodGetsSaved()
         {
             CheckSavedPaymentMethodCode(new HoldMethod(), "hold");
-            ClearPaycheckAddressTable();
-            ClearDirectDepositAccountTable();
-            ClearEmployeeTable();
+            ClearAllTable();
             CheckSavedPaymentMethodCode(new DirectDepositMethod("Bank -1", "0987654321"), "directdeposit");
-            ClearPaycheckAddressTable();
-            ClearDirectDepositAccountTable();
-            ClearEmployeeTable();
+            ClearAllTable();
             CheckSavedPaymentMethodCode(new MailMethod("111 Maple Ct."), "mail");
         }
 
@@ -148,6 +134,81 @@ namespace APPPInCSharp_Payroll.UnitTests
 
             var row = table.Rows[0];
             Assert.AreEqual("111 Maple Ct.", row["Address"]);
+            Assert.AreEqual(123, row["EmpId"]);
+        }
+
+        [Test]
+        public void SaveIsTransactional()
+        {
+            var method = new DirectDepositMethod(null, null);
+            employee.Method = method;
+            try
+            {
+                database.AddEmployee(employee);
+                Assert.Fail("An exception needs to occur for this test to work.");
+            }
+            catch (Exception)
+            {
+            }
+
+            var table = LoadTable("Employee");
+            Assert.AreEqual(0, table.Rows.Count);
+        }
+
+        [Test]
+        public void PaymentClassificationGetsSaved()
+        {
+            CheckSavedPaymentClassificationCode(new SalariedClassification(1000.00), "salaried");
+            ClearAllTable();
+            CheckSavedPaymentClassificationCode(new CommissionedClassification(2200.00, 18.00), "commissioned");
+            ClearAllTable();
+            CheckSavedPaymentClassificationCode(new HourlyClassification(150.00), "hourly");
+        }
+
+        private void CheckSavedPaymentClassificationCode(PaymentClassification classification, string expectedCode)
+        {
+            employee.Classification = classification;
+            database.AddEmployee(employee);
+
+            var table = LoadTable("Employee");
+            var row = table.Rows[0];
+            Assert.AreEqual(expectedCode, row["PaymentClassificationType"]);
+        }
+
+        [Test]
+        public void SalariedClassificationGetsSaved()
+        {
+            CheckSavedPaymentClassificationCode(new SalariedClassification(1000.00), "salaried");
+            var table = LoadTable("SalariedClassification");
+            Assert.AreEqual(1, table.Rows.Count);
+
+            var row = table.Rows[0];
+            Assert.AreEqual(1000.00, double.Parse(row["Salary"].ToString()), .01);
+            Assert.AreEqual(123, row["EmpId"]);
+        }
+
+        [Test]
+        public void CommissionedClassificationGetsSaved()
+        {
+            CheckSavedPaymentClassificationCode(new CommissionedClassification(2200.00, 18.00), "commissioned");
+            var table = LoadTable("CommissionedClassification");
+            Assert.AreEqual(1, table.Rows.Count);
+
+            var row = table.Rows[0];
+            Assert.AreEqual(2200.00, double.Parse(row["Salary"].ToString()), .01);
+            Assert.AreEqual(18.00, double.Parse(row["Commission"].ToString()), .01);
+            Assert.AreEqual(123, row["EmpId"]);
+        }
+
+        [Test]
+        public void HourlyClassificationGetsSaved()
+        {
+            CheckSavedPaymentClassificationCode(new HourlyClassification(150.00), "hourly");
+            var table = LoadTable("HourlyClassification");
+            Assert.AreEqual(1, table.Rows.Count);
+
+            var row = table.Rows[0];
+            Assert.AreEqual(150.00, double.Parse(row["HourlyRate"].ToString()), .01);
             Assert.AreEqual(123, row["EmpId"]);
         }
     }

@@ -29,7 +29,7 @@
 ```sql
 USE [Payroll]
 GO
-/****** Object:  Table [dbo].[Affiliation]    Script Date: 2019/4/23 下午 11:55:15 ******/
+/****** Object:  Table [dbo].[Affiliation]    Script Date: 2019/4/25 下午 04:26:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -44,7 +44,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[CommissionedClassification]    Script Date: 2019/4/23 下午 11:55:15 ******/
+/****** Object:  Table [dbo].[CommissionedClassification]    Script Date: 2019/4/25 下午 04:26:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -56,19 +56,19 @@ CREATE TABLE [dbo].[CommissionedClassification](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[DirectDepositAccount]    Script Date: 2019/4/23 下午 11:55:15 ******/
+/****** Object:  Table [dbo].[DirectDepositAccount]    Script Date: 2019/4/25 下午 04:26:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[DirectDepositAccount](
-    [Bank] [nvarchar](50) NULL,
-    [Account] [nvarchar](50) NULL,
+    [Bank] [nvarchar](50) NOT NULL,
+    [Account] [nvarchar](50) NOT NULL,
     [EmpId] [int] NOT NULL
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Employee]    Script Date: 2019/4/23 下午 11:55:15 ******/
+/****** Object:  Table [dbo].[Employee]    Script Date: 2019/4/25 下午 04:26:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -82,12 +82,12 @@ CREATE TABLE [dbo].[Employee](
     [PaymentClassificationType] [nvarchar](50) NULL,
 PRIMARY KEY CLUSTERED 
 (
-	[EmpId] ASC
+    [EmpId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[EmployeeAffiliation]    Script Date: 2019/4/23 下午 11:55:15 ******/
+/****** Object:  Table [dbo].[EmployeeAffiliation]    Script Date: 2019/4/25 下午 04:26:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -98,7 +98,7 @@ CREATE TABLE [dbo].[EmployeeAffiliation](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[HourlyClassification]    Script Date: 2019/4/23 下午 11:55:15 ******/
+/****** Object:  Table [dbo].[HourlyClassification]    Script Date: 2019/4/25 下午 04:26:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -109,7 +109,7 @@ CREATE TABLE [dbo].[HourlyClassification](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[PaycheckAddress]    Script Date: 2019/4/23 下午 11:55:15 ******/
+/****** Object:  Table [dbo].[PaycheckAddress]    Script Date: 2019/4/25 下午 04:26:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -120,7 +120,7 @@ CREATE TABLE [dbo].[PaycheckAddress](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SalariedClassification]    Script Date: 2019/4/23 下午 11:55:15 ******/
+/****** Object:  Table [dbo].[SalariedClassification]    Script Date: 2019/4/25 下午 04:26:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -131,7 +131,7 @@ CREATE TABLE [dbo].[SalariedClassification](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SalesReceipt]    Script Date: 2019/4/23 下午 11:55:15 ******/
+/****** Object:  Table [dbo].[SalesReceipt]    Script Date: 2019/4/25 下午 04:26:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -143,7 +143,7 @@ CREATE TABLE [dbo].[SalesReceipt](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[ServiceCharge]    Script Date: 2019/4/23 下午 11:55:15 ******/
+/****** Object:  Table [dbo].[ServiceCharge]    Script Date: 2019/4/25 下午 04:26:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -155,7 +155,7 @@ CREATE TABLE [dbo].[ServiceCharge](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[TimeCard]    Script Date: 2019/4/23 下午 11:55:15 ******/
+/****** Object:  Table [dbo].[TimeCard]    Script Date: 2019/4/25 下午 04:26:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
