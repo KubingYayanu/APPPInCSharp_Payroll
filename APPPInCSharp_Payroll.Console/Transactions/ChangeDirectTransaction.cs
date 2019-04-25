@@ -7,6 +7,6 @@
         {
         }
 
-        protected override PaymentMethod Method => new DirectMethod();
+        protected override PaymentMethod Method => new DirectDepositMethod();
     }
 }

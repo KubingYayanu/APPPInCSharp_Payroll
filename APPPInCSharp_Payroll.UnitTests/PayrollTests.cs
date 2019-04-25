@@ -290,7 +290,7 @@ namespace APPPInCSharp_Payroll.UnitTests
 
             PaymentMethod pm = e.Method;
             Assert.IsNotNull(pm);
-            Assert.IsTrue(pm is DirectMethod);
+            Assert.IsTrue(pm is DirectDepositMethod);
         }
 
         [Test]

@@ -47,6 +47,7 @@
     <Compile Include="Affiliation\NoAffiliation.cs" />
     <Compile Include="Affiliation\UnionAffiliation.cs" />
     <Compile Include="DBs\PayrollDatabase.cs" />
+    <Compile Include="DBs\SqlPayrollDatabase.cs" />
     <Compile Include="Methods\DirectMethod.cs" />
     <Compile Include="Methods\MailMethod.cs" />
     <Compile Include="Models\Paycheck.cs" />
