@@ -42,7 +42,7 @@ namespace APPPInCSharp_Payroll.UnitTests
             operation = new LoadPaymentMethodOperation(employee, "directdeposit", null);
             operation.Prepare();
             var row = ShuntRow("Bank,Account", "1st Bank", "0123456");
-            operation.CreatePaymentMethod(row);
+            operation.InvokeCreateor(row);
 
             var method = operation.Method;
             Assert.IsTrue(method is DirectDepositMethod);
@@ -69,7 +69,7 @@ namespace APPPInCSharp_Payroll.UnitTests
             operation = new LoadPaymentMethodOperation(employee, "mail", null);
             operation.Prepare();
             var row = ShuntRow("Address", "23 Pine Ct");
-            operation.CreatePaymentMethod(row);
+            operation.InvokeCreateor(row);
 
             var method = operation.Method;
             Assert.IsTrue(method is MailMethod);

@@ -12,38 +12,16 @@ namespace APPPInCSharp_Payroll.Console
             this.classificationCode = classificationCode;
         }
 
-        private readonly Employee employee;
         private readonly string classificationCode;
         private PaymentClassification classification;
 
-        private delegate void PaymentClassificationCreator(DataRow row);
-
-        private PaymentClassificationCreator paymentMethodCreator;
-        private string tableName;
-
         public PaymentClassification Classification => classification;
-
-        public SqlCommand Command
-        {
-            get
-            {
-                string sql = $@"select * from {tableName} where EmpId = @EmpId";
-                var command = new SqlCommand(sql);
-                command.Parameters.AddWithValue("@EmpId", employee.EmpId);
-                return command;
-            }
-        }
 
         public void Execute()
         {
             Prepare();
             var row = LoadDataFromCommand(Command);
-            CreatePaymentClassification(row);
-        }
-
-        public void CreatePaymentClassification(DataRow row)
-        {
-            paymentMethodCreator(row);
+            InvokeCreateor(row);
         }
 
         public void Prepare()
@@ -51,17 +29,17 @@ namespace APPPInCSharp_Payroll.Console
             if (classificationCode.Equals("salaried"))
             {
                 tableName = "SalariedClassification";
-                paymentMethodCreator = new PaymentClassificationCreator(CreateSalariedClassification);
+                instanceCreator = new InstanceCreator(CreateSalariedClassification);
             }
             else if (classificationCode.Equals("commissioned"))
             {
                 tableName = "CommissionedClassification";
-                paymentMethodCreator = new PaymentClassificationCreator(CreateCommissionedClassification);
+                instanceCreator = new InstanceCreator(CreateCommissionedClassification);
             }
             else if (classificationCode.Equals("hourly"))
             {
                 tableName = "HourlyClassification";
-                paymentMethodCreator = new PaymentClassificationCreator(CreateHourlyClassification);
+                instanceCreator = new InstanceCreator(CreateHourlyClassification);
             }
         }
 

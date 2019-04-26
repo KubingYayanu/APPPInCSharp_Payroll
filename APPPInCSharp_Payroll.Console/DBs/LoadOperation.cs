@@ -10,7 +10,28 @@ namespace APPPInCSharp_Payroll.Console
             this.connection = connection;
         }
 
+        protected delegate void InstanceCreator(DataRow row);
+
+        protected Employee employee;
         protected SqlConnection connection;
+        protected InstanceCreator instanceCreator;
+        protected string tableName;
+
+        public SqlCommand Command
+        {
+            get
+            {
+                string sql = $@"select * from {tableName} where EmpId = @EmpId";
+                var command = new SqlCommand(sql);
+                command.Parameters.AddWithValue("@EmpId", employee.EmpId);
+                return command;
+            }
+        }
+
+        public void InvokeCreateor(DataRow row)
+        {
+            instanceCreator(row);
+        }
 
         protected DataRow LoadDataFromCommand(SqlCommand command)
         {

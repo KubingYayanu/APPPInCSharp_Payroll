@@ -32,7 +32,7 @@ namespace APPPInCSharp_Payroll.UnitTests
             operation = new LoadPaymentClassificationOperation(employee, "salaried", null);
             operation.Prepare();
             var row = ShuntRow("Salary", 1000.00);
-            operation.CreatePaymentClassification(row);
+            operation.InvokeCreateor(row);
 
             var classification = operation.Classification;
             Assert.IsTrue(classification is SalariedClassification);
@@ -58,7 +58,7 @@ namespace APPPInCSharp_Payroll.UnitTests
             operation = new LoadPaymentClassificationOperation(employee, "commissioned", null);
             operation.Prepare();
             var row = ShuntRow("Salary,Commission", 2000.00, 250.00);
-            operation.CreatePaymentClassification(row);
+            operation.InvokeCreateor(row);
 
             var classification = operation.Classification;
             Assert.IsTrue(classification is CommissionedClassification);
@@ -85,7 +85,7 @@ namespace APPPInCSharp_Payroll.UnitTests
             operation = new LoadPaymentClassificationOperation(employee, "hourly", null);
             operation.Prepare();
             var row = ShuntRow("HourlyRate", 180.00);
-            operation.CreatePaymentClassification(row);
+            operation.InvokeCreateor(row);
 
             var classification = operation.Classification;
             Assert.IsTrue(classification is HourlyClassification);

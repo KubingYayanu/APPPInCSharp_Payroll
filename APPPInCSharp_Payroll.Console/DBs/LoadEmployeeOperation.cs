@@ -12,7 +12,6 @@ namespace APPPInCSharp_Payroll.Console
         }
 
         private readonly int empId;
-        private Employee employee;
 
         internal Employee Employee
         {
