@@ -29,14 +29,14 @@
 ```sql
 USE [Payroll]
 GO
-/****** Object:  Table [dbo].[Affiliation]    Script Date: 2019/4/25 下午 04:26:20 ******/
+/****** Object:  Table [dbo].[Affiliation]    Script Date: 2019/4/26 下午 04:18:55 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Affiliation](
     [Id] [int] NOT NULL,
-    [Dues] [decimal](18, 0) NULL,
+    [Dues] [decimal](9, 2) NULL,
 PRIMARY KEY CLUSTERED 
 (
     [Id] ASC
@@ -44,19 +44,19 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[CommissionedClassification]    Script Date: 2019/4/25 下午 04:26:20 ******/
+/****** Object:  Table [dbo].[CommissionedClassification]    Script Date: 2019/4/26 下午 04:18:55 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[CommissionedClassification](
-    [Salary] [decimal](18, 0) NULL,
-    [Commission] [decimal](18, 0) NULL,
+    [Salary] [decimal](9, 2) NULL,
+    [Commission] [decimal](9, 2) NULL,
     [EmpId] [int] NOT NULL
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[DirectDepositAccount]    Script Date: 2019/4/25 下午 04:26:20 ******/
+/****** Object:  Table [dbo].[DirectDepositAccount]    Script Date: 2019/4/26 下午 04:18:55 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -68,7 +68,7 @@ CREATE TABLE [dbo].[DirectDepositAccount](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Employee]    Script Date: 2019/4/25 下午 04:26:20 ******/
+/****** Object:  Table [dbo].[Employee]    Script Date: 2019/4/26 下午 04:18:55 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -87,7 +87,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[EmployeeAffiliation]    Script Date: 2019/4/25 下午 04:26:20 ******/
+/****** Object:  Table [dbo].[EmployeeAffiliation]    Script Date: 2019/4/26 下午 04:18:55 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -98,18 +98,18 @@ CREATE TABLE [dbo].[EmployeeAffiliation](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[HourlyClassification]    Script Date: 2019/4/25 下午 04:26:20 ******/
+/****** Object:  Table [dbo].[HourlyClassification]    Script Date: 2019/4/26 下午 04:18:55 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[HourlyClassification](
-    [HourlyRate] [decimal](18, 0) NULL,
+    [HourlyRate] [decimal](9, 2) NULL,
     [EmpId] [int] NOT NULL
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[PaycheckAddress]    Script Date: 2019/4/25 下午 04:26:20 ******/
+/****** Object:  Table [dbo].[PaycheckAddress]    Script Date: 2019/4/26 下午 04:18:55 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -120,18 +120,18 @@ CREATE TABLE [dbo].[PaycheckAddress](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SalariedClassification]    Script Date: 2019/4/25 下午 04:26:20 ******/
+/****** Object:  Table [dbo].[SalariedClassification]    Script Date: 2019/4/26 下午 04:18:55 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[SalariedClassification](
-    [Salary] [decimal](18, 0) NULL,
+    [Salary] [decimal](9, 2) NULL,
     [EmpId] [int] NOT NULL
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SalesReceipt]    Script Date: 2019/4/25 下午 04:26:20 ******/
+/****** Object:  Table [dbo].[SalesReceipt]    Script Date: 2019/4/26 下午 04:18:55 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -143,26 +143,26 @@ CREATE TABLE [dbo].[SalesReceipt](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[ServiceCharge]    Script Date: 2019/4/25 下午 04:26:20 ******/
+/****** Object:  Table [dbo].[ServiceCharge]    Script Date: 2019/4/26 下午 04:18:55 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[ServiceCharge](
     [Date] [datetime] NULL,
-    [Amount] [decimal](18, 0) NULL,
+    [Amount] [decimal](9, 2) NULL,
     [AffiliationId] [int] NOT NULL
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[TimeCard]    Script Date: 2019/4/25 下午 04:26:20 ******/
+/****** Object:  Table [dbo].[TimeCard]    Script Date: 2019/4/26 下午 04:18:55 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[TimeCard](
     [Date] [datetime] NULL,
-    [Hours] [decimal](18, 0) NULL,
+    [Hours] [decimal](9, 2) NULL,
     [EmpId] [int] NOT NULL
 ) ON [PRIMARY]
 

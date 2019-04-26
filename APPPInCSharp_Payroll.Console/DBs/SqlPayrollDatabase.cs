@@ -39,7 +39,11 @@ namespace APPPInCSharp_Payroll.Console
 
         public Employee GetEmployee(int id)
         {
-            throw new NotImplementedException();
+            var operation = new LoadEmployeeOperation(id, connection);
+            operation.Execute();
+            var loadedEmployee = operation.Employee;
+
+            return loadedEmployee;
         }
 
         public Employee GetUnionMember(int id)

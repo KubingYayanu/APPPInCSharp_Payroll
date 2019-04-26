@@ -22,7 +22,7 @@ namespace APPPInCSharp_Payroll.UnitTests
             string connectionString = @"Initial Catalog=Payroll;Data Source=10.0.75.1;user id=dev;password=sa;";
             connection = new SqlConnection(connectionString);
             connection.Open();
-            
+
             ClearAllTable();
 
             employee = new Employee(123, "Kubing", "123 Baker St.");
@@ -73,6 +73,26 @@ namespace APPPInCSharp_Payroll.UnitTests
         }
 
         [Test]
+        public void SaveIsTransactional()
+        {
+            var method = new DirectDepositMethod(null, null);
+            employee.Method = method;
+            try
+            {
+                database.AddEmployee(employee);
+                Assert.Fail("An exception needs to occur for this test to work.");
+            }
+            catch (Exception)
+            {
+            }
+
+            var table = LoadTable("Employee");
+            Assert.AreEqual(0, table.Rows.Count);
+        }
+
+        #region Schedule
+
+        [Test]
         public void ScheduleGetsSaved()
         {
             CheckSavedScheduleCode(new MonthlySchedule(), "monthly");
@@ -92,6 +112,10 @@ namespace APPPInCSharp_Payroll.UnitTests
             Assert.AreEqual(expectedCode, row["ScheduleType"]);
         }
 
+        #endregion Schedule
+
+        #region PaymentMethod
+
         [Test]
         public void PaymentMethodGetsSaved()
         {
@@ -100,16 +124,6 @@ namespace APPPInCSharp_Payroll.UnitTests
             CheckSavedPaymentMethodCode(new DirectDepositMethod("Bank -1", "0987654321"), "directdeposit");
             ClearAllTable();
             CheckSavedPaymentMethodCode(new MailMethod("111 Maple Ct."), "mail");
-        }
-
-        private void CheckSavedPaymentMethodCode(PaymentMethod method, string expectedCode)
-        {
-            employee.Method = method;
-            database.AddEmployee(employee);
-
-            var table = LoadTable("Employee");
-            var row = table.Rows[0];
-            Assert.AreEqual(expectedCode, row["PaymentMethodType"]);
         }
 
         [Test]
@@ -138,22 +152,32 @@ namespace APPPInCSharp_Payroll.UnitTests
         }
 
         [Test]
-        public void SaveIsTransactional()
+        public void SaveMailMethodThenHoldMethod()
         {
-            var method = new DirectDepositMethod(null, null);
+            employee.Method = new MailMethod("123 Baker St.");
+            database.AddEmployee(employee);
+
+            Employee employee2 = new Employee(321, "Ed", "456 Elm St.");
+            employee2.Method = new HoldMethod();
+            database.AddEmployee(employee2);
+
+            var table = LoadTable("PaycheckAddress");
+            Assert.AreEqual(1, table.Rows.Count);
+        }
+
+        private void CheckSavedPaymentMethodCode(PaymentMethod method, string expectedCode)
+        {
             employee.Method = method;
-            try
-            {
-                database.AddEmployee(employee);
-                Assert.Fail("An exception needs to occur for this test to work.");
-            }
-            catch (Exception)
-            {
-            }
+            database.AddEmployee(employee);
 
             var table = LoadTable("Employee");
-            Assert.AreEqual(0, table.Rows.Count);
+            var row = table.Rows[0];
+            Assert.AreEqual(expectedCode, row["PaymentMethodType"]);
         }
+
+        #endregion PaymentMethod
+
+        #region PaymentClassification
 
         [Test]
         public void PaymentClassificationGetsSaved()
@@ -163,16 +187,6 @@ namespace APPPInCSharp_Payroll.UnitTests
             CheckSavedPaymentClassificationCode(new CommissionedClassification(2200.00, 18.00), "commissioned");
             ClearAllTable();
             CheckSavedPaymentClassificationCode(new HourlyClassification(150.00), "hourly");
-        }
-
-        private void CheckSavedPaymentClassificationCode(PaymentClassification classification, string expectedCode)
-        {
-            employee.Classification = classification;
-            database.AddEmployee(employee);
-
-            var table = LoadTable("Employee");
-            var row = table.Rows[0];
-            Assert.AreEqual(expectedCode, row["PaymentClassificationType"]);
         }
 
         [Test]
@@ -212,18 +226,45 @@ namespace APPPInCSharp_Payroll.UnitTests
             Assert.AreEqual(123, row["EmpId"]);
         }
 
-        [Test]
-        public void SaveMailMethodThenHoldMethod()
+        private void CheckSavedPaymentClassificationCode(PaymentClassification classification, string expectedCode)
         {
-            employee.Method = new MailMethod("123 Baker St.");
+            employee.Classification = classification;
             database.AddEmployee(employee);
 
-            Employee employee2 = new Employee(321, "Ed", "456 Elm St.");
-            employee2.Method = new HoldMethod();
-            database.AddEmployee(employee2);
+            var table = LoadTable("Employee");
+            var row = table.Rows[0];
+            Assert.AreEqual(expectedCode, row["PaymentClassificationType"]);
+        }
 
-            var table = LoadTable("PaycheckAddress");
-            Assert.AreEqual(1, table.Rows.Count);
+        #endregion PaymentClassification
+
+        [Test]
+        public void LoadEmployee()
+        {
+            employee.Schedule = new BiweeklySchedule();
+            employee.Method = new DirectDepositMethod("1st Bank", "0123456");
+            employee.Classification = new SalariedClassification(5432.10);
+            database.AddEmployee(employee);
+
+            Employee loadedEmployee = database.GetEmployee(123);
+            Assert.AreEqual(123, loadedEmployee.EmpId);
+            Assert.AreEqual(employee.Name, loadedEmployee.Name);
+            Assert.AreEqual(employee.Address, loadedEmployee.Address);
+            PaymentSchedule schedule = loadedEmployee.Schedule;
+            Assert.IsTrue(schedule is BiweeklySchedule);
+
+            PaymentMethod method = loadedEmployee.Method;
+            Assert.IsTrue(method is DirectDepositMethod);
+
+            DirectDepositMethod ddMethod = method as DirectDepositMethod;
+            Assert.AreEqual("1st Bank", ddMethod.Bank);
+            Assert.AreEqual("0123456", ddMethod.Account);
+
+            PaymentClassification classification = loadedEmployee.Classification;
+            Assert.IsTrue(classification is SalariedClassification);
+
+            SalariedClassification salariedClassification = classification as SalariedClassification;
+            Assert.AreEqual(5432.10, salariedClassification.Salary, .01);
         }
     }
 }
