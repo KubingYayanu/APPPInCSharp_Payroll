@@ -50,6 +50,7 @@
     <Compile Include="DBs\LoadOperation.cs" />
     <Compile Include="DBs\LoadPaymentClassificationOperation.cs" />
     <Compile Include="DBs\LoadPaymentMethodOperation.cs" />
+    <Compile Include="DBs\LoadTimeCardOperation.cs" />
     <Compile Include="DBs\PayrollDatabase.cs" />
     <Compile Include="DBs\SaveEmployeeOperation.cs" />
     <Compile Include="DBs\SqlPayrollDatabase.cs" />
@@ -65,7 +66,7 @@
     <Compile Include="Transactions\AddSalariedEmployee.cs" />
     <Compile Include="Schedules\BiweeklySchedule.cs" />
     <Compile Include="Classifications\CommissionedClassification.cs" />
-    <Compile Include="Employee.cs" />
+    <Compile Include="Models\Employee.cs" />
     <Compile Include="Methods\HoldMethod.cs" />
     <Compile Include="Classifications\HourlyClassification.cs" />
     <Compile Include="Classifications\PaymentClassification.cs" />

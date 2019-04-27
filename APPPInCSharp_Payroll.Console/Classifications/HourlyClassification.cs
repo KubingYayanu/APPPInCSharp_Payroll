@@ -5,26 +5,19 @@ namespace APPPInCSharp_Payroll.Console
 {
     public class HourlyClassification : PaymentClassification
     {
-        private Hashtable timeCards = new Hashtable();
-
-        public double HourlyRate { get; }
-
         public HourlyClassification(double hourlyRate)
         {
             HourlyRate = hourlyRate;
         }
 
-        public TimeCard GetTimeCard(DateTime date) => timeCards[date] as TimeCard;
+        public double HourlyRate { get; }
 
-        public void AddTimeCard(TimeCard tc)
-        {
-            timeCards[tc.Date] = tc;
-        }
+        public Hashtable TimeCards { get; set; } = new Hashtable();
 
         public double CalculatePay(Paycheck paycheck)
         {
             double totalPay = 0.0;
-            foreach (TimeCard timeCard in timeCards.Values)
+            foreach (TimeCard timeCard in TimeCards.Values)
             {
                 bool isInPayPeriod = DateUtil.IsInPayPeriod(timeCard.Date, paycheck.PayPeriodStart, paycheck.PayPeriodEnd);
                 if (isInPayPeriod)

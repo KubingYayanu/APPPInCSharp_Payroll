@@ -46,7 +46,7 @@ namespace APPPInCSharp_Payroll.Console
         {
             if (tableName != null)
             {
-                return LoadDataFromCommand(Command);
+                return LoadDataRowFromCommand(Command);
             }
             else
             {

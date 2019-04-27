@@ -33,6 +33,7 @@ namespace APPPInCSharp_Payroll.UnitTests
 
         private void ClearAllTable()
         {
+            new SqlCommand("delete from TimeCard", connection).ExecuteNonQuery();
             new SqlCommand("delete from HourlyClassification", connection).ExecuteNonQuery();
             new SqlCommand("delete from CommissionedClassification", connection).ExecuteNonQuery();
             new SqlCommand("delete from SalariedClassification", connection).ExecuteNonQuery();
@@ -239,7 +240,7 @@ namespace APPPInCSharp_Payroll.UnitTests
         #endregion PaymentClassification
 
         [Test]
-        public void LoadEmployee()
+        public void LoadSalariedEmployee()
         {
             employee.Schedule = new BiweeklySchedule();
             employee.Method = new DirectDepositMethod("1st Bank", "0123456");
@@ -265,6 +266,69 @@ namespace APPPInCSharp_Payroll.UnitTests
 
             SalariedClassification salariedClassification = classification as SalariedClassification;
             Assert.AreEqual(5432.10, salariedClassification.Salary, .01);
+        }
+
+        [Test]
+        public void LoadHourlyEmployeeOneTimeCard()
+        {
+            employee.Schedule = new WeeklySchedule();
+            employee.Method = new DirectDepositMethod("1st Bank", "0123456");
+            employee.Classification = new HourlyClassification(180.50);
+            database.AddEmployee(employee);
+
+            DateTime payDate = new DateTime(2001, 11, 9); //Friday
+
+            TimeCardTransaction tct = new TimeCardTransaction(payDate, 9.0, 123, database);
+            tct.Execute();
+
+            Employee loadedEmployee = database.GetEmployee(123);
+            PaymentClassification classification = loadedEmployee.Classification;
+            Assert.IsTrue(classification is HourlyClassification);
+
+            HourlyClassification hourlyClassification = classification as HourlyClassification;
+            Assert.AreEqual(180.50, hourlyClassification.HourlyRate, .01);
+
+            var timeCards = hourlyClassification.TimeCards;
+            Assert.AreEqual(1, timeCards.Count);
+
+            var tc = timeCards[payDate] as TimeCard;
+            Assert.IsNotNull(tc);
+            Assert.AreEqual(9.0, tc.Hours);
+        }
+
+        [Test]
+        public void LoadHourlyEmployeeTwoTimeCards()
+        {
+            employee.Schedule = new WeeklySchedule();
+            employee.Method = new DirectDepositMethod("1st Bank", "0123456");
+            employee.Classification = new HourlyClassification(180.50);
+            database.AddEmployee(employee);
+
+            DateTime payDate = new DateTime(2001, 11, 9); //Friday
+            DateTime previousPayDate = payDate.AddDays(-7);
+            TimeCardTransaction tct1 = new TimeCardTransaction(payDate, 9.0, 123, database);
+            tct1.Execute();
+
+            TimeCardTransaction tct2 = new TimeCardTransaction(previousPayDate, 5.0, 123, database);
+            tct2.Execute();
+
+            Employee loadedEmployee = database.GetEmployee(123);
+            PaymentClassification classification = loadedEmployee.Classification;
+            Assert.IsTrue(classification is HourlyClassification);
+
+            HourlyClassification hourlyClassification = classification as HourlyClassification;
+            Assert.AreEqual(180.50, hourlyClassification.HourlyRate, .01);
+
+            var timeCards = hourlyClassification.TimeCards;
+            Assert.AreEqual(2, timeCards.Count);
+
+            var tc1 = timeCards[payDate] as TimeCard;
+            Assert.IsNotNull(tc1);
+            Assert.AreEqual(9.0, tc1.Hours);
+
+            var tc2 = timeCards[previousPayDate] as TimeCard;
+            Assert.IsNotNull(tc2);
+            Assert.AreEqual(5.0, tc2.Hours);
         }
     }
 }

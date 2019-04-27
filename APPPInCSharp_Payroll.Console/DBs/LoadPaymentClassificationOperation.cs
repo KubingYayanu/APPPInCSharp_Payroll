@@ -20,7 +20,7 @@ namespace APPPInCSharp_Payroll.Console
         public void Execute()
         {
             Prepare();
-            var row = LoadDataFromCommand(Command);
+            var row = LoadDataRowFromCommand(Command);
             InvokeCreateor(row);
         }
 
@@ -43,23 +43,32 @@ namespace APPPInCSharp_Payroll.Console
             }
         }
 
-        private void CreateSalariedClassification(DataRow row)
+        public void CreateSalariedClassification(DataRow row)
         {
             var salary = double.Parse(row["Salary"].ToString());
             classification = new SalariedClassification(salary);
         }
 
-        private void CreateCommissionedClassification(DataRow row)
+        public void CreateCommissionedClassification(DataRow row)
         {
             var salary = double.Parse(row["Salary"].ToString());
             var commissionRate = double.Parse(row["Commission"].ToString());
             classification = new CommissionedClassification(salary, commissionRate);
         }
 
-        private void CreateHourlyClassification(DataRow row)
+        public void CreateHourlyClassification(DataRow row)
         {
             var hourlyRate = double.Parse(row["HourlyRate"].ToString());
             classification = new HourlyClassification(hourlyRate);
+            AddTimeCards();
+        }
+
+        public void AddTimeCards()
+        {
+            var operation = new LoadTimeCardOperation(employee, connection);
+            operation.Execute();
+            var hourlyClassification = classification as HourlyClassification;
+            hourlyClassification.TimeCards = operation.TimeCards;
         }
     }
 }

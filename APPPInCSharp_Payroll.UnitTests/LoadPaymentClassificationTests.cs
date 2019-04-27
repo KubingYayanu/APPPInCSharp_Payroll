@@ -78,20 +78,5 @@ namespace APPPInCSharp_Payroll.UnitTests
             Assert.AreEqual("select * from HourlyClassification where EmpId = @EmpId", command.CommandText);
             Assert.AreEqual(employee.EmpId, command.Parameters["@EmpId"].Value);
         }
-
-        [Test]
-        public void LoadHourlyClassificationFromRow()
-        {
-            operation = new LoadPaymentClassificationOperation(employee, "hourly", null);
-            operation.Prepare();
-            var row = ShuntRow("HourlyRate", 180.00);
-            operation.InvokeCreateor(row);
-
-            var classification = operation.Classification;
-            Assert.IsTrue(classification is HourlyClassification);
-
-            var salariedClassification = classification as HourlyClassification;
-            Assert.AreEqual(180.00, salariedClassification.HourlyRate, .01);
-        }
     }
 }

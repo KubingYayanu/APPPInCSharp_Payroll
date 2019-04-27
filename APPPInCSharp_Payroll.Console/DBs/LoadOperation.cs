@@ -17,7 +17,7 @@ namespace APPPInCSharp_Payroll.Console
         protected InstanceCreator instanceCreator;
         protected string tableName;
 
-        public SqlCommand Command
+        public virtual SqlCommand Command
         {
             get
             {
@@ -33,7 +33,7 @@ namespace APPPInCSharp_Payroll.Console
             instanceCreator(row);
         }
 
-        protected DataRow LoadDataFromCommand(SqlCommand command)
+        protected DataRow LoadDataRowFromCommand(SqlCommand command)
         {
             command.Connection = connection;
             SqlDataAdapter adapter = new SqlDataAdapter(command);
@@ -43,6 +43,17 @@ namespace APPPInCSharp_Payroll.Console
             var row = table.Rows[0];
 
             return row;
+        }
+
+        protected DataTable LoadDataFromCommand(SqlCommand command)
+        {
+            command.Connection = connection;
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            DataSet dataset = new DataSet();
+            adapter.Fill(dataset);
+            var table = dataset.Tables["table"];
+
+            return table;
         }
     }
 }

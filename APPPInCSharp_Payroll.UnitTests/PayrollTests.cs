@@ -1,6 +1,7 @@
 ﻿using APPPInCSharp_Payroll.Console;
 using NUnit.Framework;
 using System;
+using System.Linq;
 
 namespace APPPInCSharp_Payroll.UnitTests
 {
@@ -109,7 +110,8 @@ namespace APPPInCSharp_Payroll.UnitTests
             AddHourlyEmployee t = new AddHourlyEmployee(empId, "Kubing", "Home", 15.25, database);
             t.Execute();
 
-            TimeCardTransaction tct = new TimeCardTransaction(new DateTime(2005, 7, 31), 8.0, empId, database);
+            var payDay = new DateTime(2005, 7, 31);
+            TimeCardTransaction tct = new TimeCardTransaction(payDay, 8.0, empId, database);
             tct.Execute();
 
             Employee e = database.GetEmployee(empId);
@@ -119,7 +121,8 @@ namespace APPPInCSharp_Payroll.UnitTests
             Assert.IsTrue(pc is HourlyClassification);
 
             HourlyClassification hc = pc as HourlyClassification;
-            TimeCard tc = hc.GetTimeCard(new DateTime(2005, 7, 31));
+            var timeCards = database.GetTimeCards(empId).ToList();
+            var tc = timeCards.FirstOrDefault(x => x.Date == payDay);
             Assert.IsNotNull(tc);
             Assert.AreEqual(8.0, tc.Hours);
         }

@@ -25,7 +25,7 @@ namespace APPPInCSharp_Payroll.Console
                 HourlyClassification hc = e.Classification as HourlyClassification;
                 if (hc != null)
                 {
-                    hc.AddTimeCard(new TimeCard(date, hours));
+                    database.AddTimeCard(empId, new TimeCard(date, hours));
                 }
                 else
                 {

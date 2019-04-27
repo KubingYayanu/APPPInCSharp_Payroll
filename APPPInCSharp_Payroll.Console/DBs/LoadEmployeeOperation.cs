@@ -19,7 +19,7 @@ namespace APPPInCSharp_Payroll.Console
             set { employee = value; }
         }
 
-        public SqlCommand LoadEmployeeCommand
+        public override SqlCommand Command
         {
             get
             {
@@ -32,7 +32,7 @@ namespace APPPInCSharp_Payroll.Console
 
         public void Execute()
         {
-            var row = LoadDataFromCommand(LoadEmployeeCommand);
+            var row = LoadDataRowFromCommand(Command);
 
             CreateEmployee(row);
             AddSchedule(row);

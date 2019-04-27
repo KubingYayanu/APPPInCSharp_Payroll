@@ -23,7 +23,7 @@ namespace APPPInCSharp_Payroll.UnitTests
         public void LoadingEmployeeDataCommand()
         {
             operation = new LoadEmployeeOperation(123, null);
-            SqlCommand command = operation.LoadEmployeeCommand;
+            SqlCommand command = operation.Command;
             Assert.AreEqual("select * from Employee where EmpId = @EmpId", command.CommandText);
             Assert.AreEqual(123, command.Parameters["@EmpId"].Value);
         }

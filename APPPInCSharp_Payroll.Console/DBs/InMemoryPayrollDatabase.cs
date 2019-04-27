@@ -53,5 +53,22 @@ namespace APPPInCSharp_Payroll.Console
         }
 
         #endregion UnionMember
+
+        public void AddTimeCard(int empId, TimeCard tc)
+        {
+            var employee = employees[empId] as Employee;
+            var hourlyClassification = employee.Classification as HourlyClassification;
+            hourlyClassification.TimeCards[tc.Date] = tc;
+            employees[empId] = employee;
+        }
+
+        public IList<TimeCard> GetTimeCards(int empId)
+        {
+            var employee = employees[empId] as Employee;
+            var hourlyClassification = employee.Classification as HourlyClassification;
+            var timeCards = new TimeCard[hourlyClassification.TimeCards.Count];
+            hourlyClassification.TimeCards.Values.CopyTo(timeCards, 0);
+            return timeCards.ToList();
+        }
     }
 }

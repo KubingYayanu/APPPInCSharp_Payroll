@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace APPPInCSharp_Payroll.Console
 {
@@ -17,5 +18,9 @@ namespace APPPInCSharp_Payroll.Console
         Employee GetUnionMember(int id);
 
         void RemoveUnionMember(int memberId);
+
+        void AddTimeCard(int empId, TimeCard tc);
+
+        IList<TimeCard> GetTimeCards(int empId);
     }
 }
