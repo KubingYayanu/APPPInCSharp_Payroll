@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace APPPInCSharp_Payroll.UnitTests
 {
     [TestFixture]
-    public class LoadPaymentClassificationTests : LoadOperationTest
+    public class LoadPaymentClassificationTests
     {
         private Employee employee;
         private LoadPaymentClassificationOperation operation;
@@ -31,7 +31,7 @@ namespace APPPInCSharp_Payroll.UnitTests
         {
             operation = new LoadPaymentClassificationOperation(employee, "salaried", null);
             operation.Prepare();
-            var row = ShuntRow("Salary", 1000.00);
+            var row = DataRowUtil.ShuntRow("Salary", 1000.00);
             operation.InvokeCreateor(row);
 
             var classification = operation.Classification;
@@ -50,22 +50,6 @@ namespace APPPInCSharp_Payroll.UnitTests
 
             Assert.AreEqual("select * from CommissionedClassification where EmpId = @EmpId", command.CommandText);
             Assert.AreEqual(employee.EmpId, command.Parameters["@EmpId"].Value);
-        }
-
-        [Test]
-        public void LoadCommissionedClassificationFromRow()
-        {
-            operation = new LoadPaymentClassificationOperation(employee, "commissioned", null);
-            operation.Prepare();
-            var row = ShuntRow("Salary,Commission", 2000.00, 250.00);
-            operation.InvokeCreateor(row);
-
-            var classification = operation.Classification;
-            Assert.IsTrue(classification is CommissionedClassification);
-
-            var salariedClassification = classification as CommissionedClassification;
-            Assert.AreEqual(2000.00, salariedClassification.Salary, .01);
-            Assert.AreEqual(250.00, salariedClassification.CommissionRate, .01);
         }
 
         [Test]

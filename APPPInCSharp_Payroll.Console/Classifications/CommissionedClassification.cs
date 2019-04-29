@@ -1,33 +1,25 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 
 namespace APPPInCSharp_Payroll.Console
 {
     public class CommissionedClassification : PaymentClassification
     {
-        private Hashtable salesReceipts = new Hashtable();
-
-        public double Salary { get; }
-
-        public double CommissionRate { get; }
-
         public CommissionedClassification(double salary, double commissionRate)
         {
             Salary = salary;
             CommissionRate = commissionRate;
         }
 
-        public SalesReceipt GetSalesReceipt(DateTime date) => salesReceipts[date] as SalesReceipt;
+        public double Salary { get; }
 
-        public void AddSalesReceipt(SalesReceipt sr)
-        {
-            salesReceipts[sr.Date] = sr;
-        }
+        public double CommissionRate { get; }
+
+        public Hashtable SalesReceipts { get; set; } = new Hashtable();
 
         public double CalculatePay(Paycheck paycheck)
         {
             double totalPay = Salary;
-            foreach (SalesReceipt receipt in salesReceipts.Values)
+            foreach (SalesReceipt receipt in SalesReceipts.Values)
             {
                 bool isInPayPeriod = DateUtil.IsInPayPeriod(receipt.Date, paycheck.PayPeriodStart, paycheck.PayPeriodEnd);
                 if (isInPayPeriod)

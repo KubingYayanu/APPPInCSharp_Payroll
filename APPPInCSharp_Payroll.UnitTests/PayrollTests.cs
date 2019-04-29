@@ -110,8 +110,8 @@ namespace APPPInCSharp_Payroll.UnitTests
             AddHourlyEmployee t = new AddHourlyEmployee(empId, "Kubing", "Home", 15.25, database);
             t.Execute();
 
-            var payDay = new DateTime(2005, 7, 31);
-            TimeCardTransaction tct = new TimeCardTransaction(payDay, 8.0, empId, database);
+            var punchDay = new DateTime(2005, 7, 31);
+            TimeCardTransaction tct = new TimeCardTransaction(punchDay, 8.0, empId, database);
             tct.Execute();
 
             Employee e = database.GetEmployee(empId);
@@ -122,7 +122,7 @@ namespace APPPInCSharp_Payroll.UnitTests
 
             HourlyClassification hc = pc as HourlyClassification;
             var timeCards = database.GetTimeCards(empId).ToList();
-            var tc = timeCards.FirstOrDefault(x => x.Date == payDay);
+            var tc = timeCards.FirstOrDefault(x => x.Date == punchDay);
             Assert.IsNotNull(tc);
             Assert.AreEqual(8.0, tc.Hours);
         }
@@ -134,7 +134,8 @@ namespace APPPInCSharp_Payroll.UnitTests
             AddCommissionEmployee t = new AddCommissionEmployee(empId, "Kubing", "Home", 2000, 3.0, database);
             t.Execute();
 
-            SalesReceiptTransaction srt = new SalesReceiptTransaction(new DateTime(2017, 3, 19), 4, empId, database);
+            var saleDay = new DateTime(2017, 3, 19);
+            SalesReceiptTransaction srt = new SalesReceiptTransaction(saleDay, 4, empId, database);
             srt.Execute();
 
             Employee e = database.GetEmployee(empId);
@@ -144,7 +145,8 @@ namespace APPPInCSharp_Payroll.UnitTests
             Assert.IsTrue(pc is CommissionedClassification);
 
             CommissionedClassification hc = pc as CommissionedClassification;
-            SalesReceipt sr = hc.GetSalesReceipt(new DateTime(2017, 3, 19));
+            var salesReceipts = database.GetSalesReceipts(empId).ToList();
+            var sr = salesReceipts.FirstOrDefault(x => x.Date == saleDay);
             Assert.IsNotNull(sr);
             Assert.AreEqual(4, sr.Amount);
         }

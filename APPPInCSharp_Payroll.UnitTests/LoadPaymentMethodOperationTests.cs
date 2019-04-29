@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace APPPInCSharp_Payroll.UnitTests
 {
     [TestFixture]
-    public class LoadPaymentMethodOperationTests : LoadOperationTest
+    public class LoadPaymentMethodOperationTests
     {
         private Employee employee;
         private LoadPaymentMethodOperation operation;
@@ -41,7 +41,7 @@ namespace APPPInCSharp_Payroll.UnitTests
         {
             operation = new LoadPaymentMethodOperation(employee, "directdeposit", null);
             operation.Prepare();
-            var row = ShuntRow("Bank,Account", "1st Bank", "0123456");
+            var row = DataRowUtil.ShuntRow("Bank,Account", "1st Bank", "0123456");
             operation.InvokeCreateor(row);
 
             var method = operation.Method;
@@ -68,7 +68,7 @@ namespace APPPInCSharp_Payroll.UnitTests
         {
             operation = new LoadPaymentMethodOperation(employee, "mail", null);
             operation.Prepare();
-            var row = ShuntRow("Address", "23 Pine Ct");
+            var row = DataRowUtil.ShuntRow("Address", "23 Pine Ct");
             operation.InvokeCreateor(row);
 
             var method = operation.Method;

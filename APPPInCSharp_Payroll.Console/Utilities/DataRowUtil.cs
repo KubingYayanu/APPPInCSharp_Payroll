@@ -1,10 +1,10 @@
 ﻿using System.Data;
 
-namespace APPPInCSharp_Payroll.UnitTests
+namespace APPPInCSharp_Payroll.Console
 {
-    public abstract class LoadOperationTest
+    public static class DataRowUtil
     {
-        public DataRow ShuntRow(string columns, params object[] values)
+        public static DataRow ShuntRow(string columns, params object[] values)
         {
             var table = new DataTable();
             foreach (var columnName in columns.Split(','))

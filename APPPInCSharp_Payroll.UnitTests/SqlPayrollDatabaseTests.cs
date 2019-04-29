@@ -33,6 +33,7 @@ namespace APPPInCSharp_Payroll.UnitTests
 
         private void ClearAllTable()
         {
+            new SqlCommand("delete from SalesReceipt", connection).ExecuteNonQuery();
             new SqlCommand("delete from TimeCard", connection).ExecuteNonQuery();
             new SqlCommand("delete from HourlyClassification", connection).ExecuteNonQuery();
             new SqlCommand("delete from CommissionedClassification", connection).ExecuteNonQuery();
@@ -276,9 +277,8 @@ namespace APPPInCSharp_Payroll.UnitTests
             employee.Classification = new HourlyClassification(180.50);
             database.AddEmployee(employee);
 
-            DateTime payDate = new DateTime(2001, 11, 9); //Friday
-
-            TimeCardTransaction tct = new TimeCardTransaction(payDate, 9.0, 123, database);
+            DateTime punchDate = new DateTime(2001, 11, 9); //Friday
+            TimeCardTransaction tct = new TimeCardTransaction(punchDate, 9.0, 123, database);
             tct.Execute();
 
             Employee loadedEmployee = database.GetEmployee(123);
@@ -291,7 +291,7 @@ namespace APPPInCSharp_Payroll.UnitTests
             var timeCards = hourlyClassification.TimeCards;
             Assert.AreEqual(1, timeCards.Count);
 
-            var tc = timeCards[payDate] as TimeCard;
+            var tc = timeCards[punchDate] as TimeCard;
             Assert.IsNotNull(tc);
             Assert.AreEqual(9.0, tc.Hours);
         }
@@ -329,6 +329,34 @@ namespace APPPInCSharp_Payroll.UnitTests
             var tc2 = timeCards[previousPayDate] as TimeCard;
             Assert.IsNotNull(tc2);
             Assert.AreEqual(5.0, tc2.Hours);
+        }
+
+        [Test]
+        public void LoadCommissionedClassificationOneSalesReceipt()
+        {
+            employee.Schedule = new BiweeklySchedule();
+            employee.Method = new DirectDepositMethod("1st Bank", "0123456");
+            employee.Classification = new CommissionedClassification(500.00, 80.30);
+            database.AddEmployee(employee);
+
+            var saleDay = new DateTime(2001, 11, 16);
+            SalesReceiptTransaction srt = new SalesReceiptTransaction(saleDay, 3, 123, database);
+            srt.Execute();
+
+            Employee loadedEmployee = database.GetEmployee(123);
+            PaymentClassification classification = loadedEmployee.Classification;
+            Assert.IsTrue(classification is CommissionedClassification);
+
+            CommissionedClassification commissionedClassification = classification as CommissionedClassification;
+            Assert.AreEqual(500.00, commissionedClassification.Salary, .01);
+            Assert.AreEqual(80.30, commissionedClassification.CommissionRate, .01);
+
+            var salesReceipts = commissionedClassification.SalesReceipts;
+            Assert.AreEqual(1, salesReceipts.Count);
+
+            var sr = salesReceipts[saleDay] as SalesReceipt;
+            Assert.IsNotNull(sr);
+            Assert.AreEqual(3, sr.Amount);
         }
     }
 }

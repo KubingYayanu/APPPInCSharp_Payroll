@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 namespace APPPInCSharp_Payroll.UnitTests
 {
     [TestFixture]
-    public class LoadEmployeeOperationTests : LoadOperationTest
+    public class LoadEmployeeOperationTests
     {
         private LoadEmployeeOperation operation;
         private Employee employee;
@@ -31,7 +31,7 @@ namespace APPPInCSharp_Payroll.UnitTests
         [Test]
         public void LoadEmployeeData()
         {
-            var row = ShuntRow("Name,Address", "Kubing", "10 Rue de Roi");
+            var row = DataRowUtil.ShuntRow("Name,Address", "Kubing", "10 Rue de Roi");
             operation.CreateEmployee(row);
 
             Assert.IsNotNull(operation.Employee);
@@ -42,15 +42,15 @@ namespace APPPInCSharp_Payroll.UnitTests
         [Test]
         public void LoadingSchedules()
         {
-            var row = ShuntRow("ScheduleType", "weekly");
+            var row = DataRowUtil.ShuntRow("ScheduleType", "weekly");
             operation.AddSchedule(row);
             Assert.IsTrue(employee.Schedule is WeeklySchedule);
 
-            row = ShuntRow("ScheduleType", "biweekly");
+            row = DataRowUtil.ShuntRow("ScheduleType", "biweekly");
             operation.AddSchedule(row);
             Assert.IsTrue(employee.Schedule is BiweeklySchedule);
 
-            row = ShuntRow("ScheduleType", "monthly");
+            row = DataRowUtil.ShuntRow("ScheduleType", "monthly");
             operation.AddSchedule(row);
             Assert.IsTrue(employee.Schedule is MonthlySchedule);
         }
@@ -58,7 +58,7 @@ namespace APPPInCSharp_Payroll.UnitTests
         [Test]
         public void LoadingHoldMethod()
         {
-            var row = ShuntRow("PaymentMethodType", "hold");
+            var row = DataRowUtil.ShuntRow("PaymentMethodType", "hold");
             operation.AddPaymentMethod(row);
 
             Assert.IsTrue(employee.Method is HoldMethod);

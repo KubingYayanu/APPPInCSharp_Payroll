@@ -17,15 +17,12 @@ namespace APPPInCSharp_Payroll.Console
             connection.Open();
         }
 
+        #region Employee
+
         public void AddEmployee(Employee employee)
         {
             var operation = new SaveEmployeeOperation(employee, connection);
             operation.Execute();
-        }
-
-        public void AddUnionMember(int id, Employee e)
-        {
-            throw new NotImplementedException();
         }
 
         public void DeleteEmployee(int id)
@@ -47,7 +44,16 @@ namespace APPPInCSharp_Payroll.Console
             return loadedEmployee;
         }
 
+        #endregion Employee
+
+        #region UnionMember
+
         public Employee GetUnionMember(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddUnionMember(int id, Employee e)
         {
             throw new NotImplementedException();
         }
@@ -56,6 +62,8 @@ namespace APPPInCSharp_Payroll.Console
         {
             throw new NotImplementedException();
         }
+
+        #endregion UnionMember
 
         public void AddTimeCard(int empId, TimeCard tc)
         {
@@ -76,16 +84,33 @@ namespace APPPInCSharp_Payroll.Console
             var dataset = new DataSet();
             adapter.Fill(dataset);
             var table = dataset.Tables["table"];
-
-            var timeCards = new List<TimeCard> { };
-            foreach (DataRow row in table.Rows)
-            {
-                double hours = double.Parse(row["Hours"].ToString());
-                DateTime date = DateTime.Parse(row["Date"].ToString());
-                timeCards.Add(new TimeCard(date, hours));
-            }
+            var timeCards = table.ToList<TimeCard>();
 
             return timeCards;
+        }
+
+        public void AddSalesReceipt(int empId, SalesReceipt sr)
+        {
+            string sql = @"insert into SalesReceipt (EmpId, Date, Amount) values (@EmpId, @Date, @Amount)";
+            var command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@EmpId", empId);
+            command.Parameters.AddWithValue("@Date", sr.Date);
+            command.Parameters.AddWithValue("@Amount", sr.Amount);
+            command.ExecuteNonQuery();
+        }
+
+        public IList<SalesReceipt> GetSalesReceipts(int empId)
+        {
+            string sql = @"select * from SalesReceipt where EmpId = @EmpId";
+            var command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@EmpId", empId);
+            var adapter = new SqlDataAdapter(command);
+            var dataset = new DataSet();
+            adapter.Fill(dataset);
+            var table = dataset.Tables["table"];
+            var salesReceipts = table.ToList<SalesReceipt>();
+
+            return salesReceipts;
         }
     }
 }

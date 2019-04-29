@@ -25,7 +25,7 @@ namespace APPPInCSharp_Payroll.Console
                 CommissionedClassification cc = e.Classification as CommissionedClassification;
                 if (cc != null)
                 {
-                    cc.AddSalesReceipt(new SalesReceipt(date, amount));
+                    database.AddSalesReceipt(empId, new SalesReceipt(date, amount));
                 }
                 else
                 {

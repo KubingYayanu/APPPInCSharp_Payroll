@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace APPPInCSharp_Payroll.Console
 {
@@ -22,5 +21,9 @@ namespace APPPInCSharp_Payroll.Console
         void AddTimeCard(int empId, TimeCard tc);
 
         IList<TimeCard> GetTimeCards(int empId);
+
+        void AddSalesReceipt(int empId, SalesReceipt sr);
+
+        IList<SalesReceipt> GetSalesReceipts(int empId);
     }
 }

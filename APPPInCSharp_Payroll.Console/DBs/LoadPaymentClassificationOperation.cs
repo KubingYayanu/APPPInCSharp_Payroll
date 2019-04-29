@@ -54,6 +54,15 @@ namespace APPPInCSharp_Payroll.Console
             var salary = double.Parse(row["Salary"].ToString());
             var commissionRate = double.Parse(row["Commission"].ToString());
             classification = new CommissionedClassification(salary, commissionRate);
+            AddSalesReceipts();
+        }
+
+        private void AddSalesReceipts()
+        {
+            var operation = new LoadSalesReceiptOperation(employee, connection);
+            operation.Execute();
+            var commissionedClassification = classification as CommissionedClassification;
+            commissionedClassification.SalesReceipts = operation.SalesReceipts;
         }
 
         public void CreateHourlyClassification(DataRow row)

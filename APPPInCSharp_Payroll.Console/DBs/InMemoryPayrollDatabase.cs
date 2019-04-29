@@ -70,5 +70,22 @@ namespace APPPInCSharp_Payroll.Console
             hourlyClassification.TimeCards.Values.CopyTo(timeCards, 0);
             return timeCards.ToList();
         }
+
+        public void AddSalesReceipt(int empId, SalesReceipt sr)
+        {
+            var employee = employees[empId] as Employee;
+            var commissionedClassification = employee.Classification as CommissionedClassification;
+            commissionedClassification.SalesReceipts[sr.Date] = sr;
+            employees[empId] = employee;
+        }
+
+        public IList<SalesReceipt> GetSalesReceipts(int empId)
+        {
+            var employee = employees[empId] as Employee;
+            var commissionedClassification = employee.Classification as CommissionedClassification;
+            var salesReceipts = new SalesReceipt[commissionedClassification.SalesReceipts.Count];
+            commissionedClassification.SalesReceipts.Values.CopyTo(salesReceipts, 0);
+            return salesReceipts.ToList();
+        }
     }
 }

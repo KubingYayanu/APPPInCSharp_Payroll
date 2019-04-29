@@ -50,6 +50,7 @@
     <Compile Include="DBs\LoadOperation.cs" />
     <Compile Include="DBs\LoadPaymentClassificationOperation.cs" />
     <Compile Include="DBs\LoadPaymentMethodOperation.cs" />
+    <Compile Include="DBs\LoadSalesReceiptOperation.cs" />
     <Compile Include="DBs\LoadTimeCardOperation.cs" />
     <Compile Include="DBs\PayrollDatabase.cs" />
     <Compile Include="DBs\SaveEmployeeOperation.cs" />
@@ -98,6 +99,8 @@
     <Compile Include="Transactions\Transaction.cs" />
     <Compile Include="Classifications\SalariedClassification.cs" />
     <Compile Include="Schedules\WeeklySchedule.cs" />
+    <Compile Include="Utilities\DataRowUtil.cs" />
+    <Compile Include="Utilities\DataTableExtensions.cs" />
     <Compile Include="Utilities\DateUtil.cs" />
   </ItemGroup>
   <ItemGroup>
