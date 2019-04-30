@@ -3,16 +3,15 @@ using System.Data.SqlClient;
 
 namespace APPPInCSharp_Payroll.Console
 {
-    public class SaveEmployeeOperation
+    public class SaveEmployeeOperation : SaveOperation
     {
         public SaveEmployeeOperation(Employee employee, SqlConnection connection)
+            : base(connection)
         {
             this.employee = employee;
-            this.connection = connection;
         }
 
         private readonly Employee employee;
-        private readonly SqlConnection connection;
         private SqlCommand insertEmployeeCommand;
         private SqlCommand insertPaymentMethodCommand;
         private SqlCommand insertPaymentClassificationCommand;
@@ -29,25 +28,15 @@ namespace APPPInCSharp_Payroll.Console
 
             try
             {
-                ExecuteCommand(insertEmployeeCommand, transaction);
-                ExecuteCommand(insertPaymentMethodCommand, transaction);
-                ExecuteCommand(insertPaymentClassificationCommand, transaction);
+                ExecuteTransaction(insertEmployeeCommand, transaction);
+                ExecuteTransaction(insertPaymentMethodCommand, transaction);
+                ExecuteTransaction(insertPaymentClassificationCommand, transaction);
                 transaction.Commit();
             }
             catch (Exception e)
             {
                 transaction.Rollback();
                 throw e;
-            }
-        }
-
-        private void ExecuteCommand(SqlCommand command, SqlTransaction transaction)
-        {
-            if (command != null)
-            {
-                command.Connection = connection;
-                command.Transaction = transaction;
-                command.ExecuteNonQuery();
             }
         }
 

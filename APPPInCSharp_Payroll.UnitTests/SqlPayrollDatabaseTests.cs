@@ -33,6 +33,8 @@ namespace APPPInCSharp_Payroll.UnitTests
 
         private void ClearAllTable()
         {
+            new SqlCommand("delete from EmployeeAffiliation", connection).ExecuteNonQuery();
+            new SqlCommand("delete from Affiliation", connection).ExecuteNonQuery();
             new SqlCommand("delete from SalesReceipt", connection).ExecuteNonQuery();
             new SqlCommand("delete from TimeCard", connection).ExecuteNonQuery();
             new SqlCommand("delete from HourlyClassification", connection).ExecuteNonQuery();
@@ -357,6 +359,26 @@ namespace APPPInCSharp_Payroll.UnitTests
             var sr = salesReceipts[saleDay] as SalesReceipt;
             Assert.IsNotNull(sr);
             Assert.AreEqual(3, sr.Amount);
+        }
+
+        [Test]
+        public void UnionMemberGetsSaved()
+        {
+            database.AddEmployee(employee);
+
+            int memberId = 7783;
+            ChangeMemberTransaction cmt = new ChangeMemberTransaction(employee.EmpId, memberId, 99.42, database);
+            cmt.Execute();
+
+            var affiliationTable = LoadTable("Affiliation");
+            var affiliationRow = affiliationTable.Rows[0];
+            Assert.AreEqual(memberId, affiliationRow["Id"]);
+            Assert.AreEqual(99.42, double.Parse(affiliationRow["Dues"].ToString()), .01);
+
+            var employeeAffiliationTable = LoadTable("EmployeeAffiliation");
+            var employeeAffiliationRow = employeeAffiliationTable.Rows[0];
+            Assert.AreEqual(memberId, employeeAffiliationRow["AffiliationId"]);
+            Assert.AreEqual(employee.EmpId, employeeAffiliationRow["EmpId"]);
         }
     }
 }

@@ -9,8 +9,8 @@
 
         protected override void Change(Employee e)
         {
-            RecordMembership(e);
             e.Affiliation = Affiliation;
+            RecordMembership(e);
         }
 
         protected abstract Affiliation Affiliation { get; }

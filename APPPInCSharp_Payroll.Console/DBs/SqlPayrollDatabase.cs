@@ -7,8 +7,6 @@ namespace APPPInCSharp_Payroll.Console
 {
     public class SqlPayrollDatabase : PayrollDatabase
     {
-        private readonly SqlConnection connection;
-
         public SqlPayrollDatabase()
         {
             //Docker
@@ -16,6 +14,8 @@ namespace APPPInCSharp_Payroll.Console
             connection = new SqlConnection(connectionString);
             connection.Open();
         }
+
+        private readonly SqlConnection connection;
 
         #region Employee
 
@@ -48,14 +48,15 @@ namespace APPPInCSharp_Payroll.Console
 
         #region UnionMember
 
-        public Employee GetUnionMember(int id)
+        public Employee GetUnionMember(int memberId)
         {
             throw new NotImplementedException();
         }
 
-        public void AddUnionMember(int id, Employee e)
+        public void AddUnionMember(int memberId, Employee employee)
         {
-            throw new NotImplementedException();
+            var operation = new SaveUnionMemberOperaion(memberId, employee, connection);
+            operation.Execute();
         }
 
         public void RemoveUnionMember(int memberId)

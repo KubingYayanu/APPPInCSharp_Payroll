@@ -12,7 +12,7 @@ namespace APPPInCSharp_Payroll.Console
 
         void DeleteEmployee(int id);
 
-        void AddUnionMember(int id, Employee e);
+        void AddUnionMember(int memberId, Employee e);
 
         Employee GetUnionMember(int id);
 

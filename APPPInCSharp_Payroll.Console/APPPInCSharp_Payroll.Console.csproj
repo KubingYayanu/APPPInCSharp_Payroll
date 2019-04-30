@@ -54,6 +54,8 @@
     <Compile Include="DBs\LoadTimeCardOperation.cs" />
     <Compile Include="DBs\PayrollDatabase.cs" />
     <Compile Include="DBs\SaveEmployeeOperation.cs" />
+    <Compile Include="DBs\SaveOperation.cs" />
+    <Compile Include="DBs\SaveUnionMemberOperaion.cs" />
     <Compile Include="DBs\SqlPayrollDatabase.cs" />
     <Compile Include="Methods\DirectMethod.cs" />
     <Compile Include="Methods\MailMethod.cs" />
