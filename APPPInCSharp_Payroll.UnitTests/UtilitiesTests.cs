@@ -7,6 +7,8 @@ namespace APPPInCSharp_Payroll.UnitTests
     [TestFixture]
     public class UtilitiesTests
     {
+        #region DataRowUtil
+
         private class ObjectClass
         {
             public int Int { get; set; }
@@ -88,5 +90,58 @@ namespace APPPInCSharp_Payroll.UnitTests
             Assert.IsNull(obj.Bool);
             Assert.IsNull(obj.DateTime);
         }
+
+        #endregion DataRowUtil
+
+        #region SqlCommandUtil
+
+        private class ParameterClass
+        {
+            public int Id { get; set; }
+
+            public string Name { get; set; }
+
+            public double Amount { get; set; }
+
+            public DateTime Date { get; set; }
+        }
+
+        [Test]
+        public void CreateSqlCommandWithClass()
+        {
+            string sql = "select * from Test";
+            var date = new DateTime(1995, 5, 4);
+            var parameter = new ParameterClass
+            {
+                Id = 1,
+                Amount = 2.2d,
+                Name = "Kubing",
+                Date = date
+            };
+            var command = SqlCommandUtil.CreateCommand(sql, parameter);
+
+            Assert.AreEqual(sql, command.CommandText);
+            Assert.AreEqual(1, int.Parse(command.Parameters["@Id"].Value.ToString()));
+            Assert.AreEqual(2.2d, double.Parse(command.Parameters["@Amount"].Value.ToString()), .01);
+            Assert.AreEqual("Kubing", command.Parameters["@Name"].Value);
+            Assert.AreEqual(date, DateTime.Parse(command.Parameters["@Date"].Value.ToString()));
+        }
+
+        [Test]
+        public void CreateSqlCommandWithParams()
+        {
+            string sql = "select * from Test";
+            var date = new DateTime(1995, 5, 4);
+            var param = new { Id = 1, Amount = 2.2d, Name = "Kubing", Date = date };
+            var command = SqlCommandUtil.CreateCommand(sql, "Id,Amount,Name,Date", 1, 2.2d, "Kubing", date);
+
+            Assert.AreEqual(sql, command.CommandText);
+            Assert.AreEqual(1, int.Parse(command.Parameters["@Id"].Value.ToString()));
+            Assert.AreEqual(2.2d, double.Parse(command.Parameters["@Amount"].Value.ToString()), .01);
+            Assert.AreEqual("Kubing", command.Parameters["@Name"].Value);
+            Assert.AreEqual(date, DateTime.Parse(command.Parameters["@Date"].Value.ToString()));
+        }
+
+        #endregion SqlCommandUtil
     }
 }

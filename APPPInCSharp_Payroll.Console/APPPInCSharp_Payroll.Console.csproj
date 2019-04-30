@@ -102,6 +102,7 @@
     <Compile Include="Utilities\DataRowUtil.cs" />
     <Compile Include="Utilities\DataTableExtensions.cs" />
     <Compile Include="Utilities\DateUtil.cs" />
+    <Compile Include="Utilities\SqlCommandUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
