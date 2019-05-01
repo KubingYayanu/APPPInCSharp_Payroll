@@ -50,7 +50,11 @@ namespace APPPInCSharp_Payroll.Console
 
         public Employee GetUnionMember(int memberId)
         {
-            throw new NotImplementedException();
+            var operation = new LoadUnionMemberOperation(memberId, connection);
+            operation.Execute();
+            var unionMember = operation.Employee;
+
+            return unionMember;
         }
 
         public void AddUnionMember(int memberId, Employee employee)

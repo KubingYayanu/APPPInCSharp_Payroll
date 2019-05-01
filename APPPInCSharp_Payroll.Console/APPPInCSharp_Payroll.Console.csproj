@@ -52,6 +52,7 @@
     <Compile Include="DBs\LoadPaymentMethodOperation.cs" />
     <Compile Include="DBs\LoadSalesReceiptOperation.cs" />
     <Compile Include="DBs\LoadTimeCardOperation.cs" />
+    <Compile Include="DBs\LoadUnionMemberOperation.cs" />
     <Compile Include="DBs\PayrollDatabase.cs" />
     <Compile Include="DBs\SaveEmployeeOperation.cs" />
     <Compile Include="DBs\SaveOperation.cs" />

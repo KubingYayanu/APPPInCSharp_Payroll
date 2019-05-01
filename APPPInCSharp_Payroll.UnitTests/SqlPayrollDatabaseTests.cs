@@ -380,5 +380,24 @@ namespace APPPInCSharp_Payroll.UnitTests
             Assert.AreEqual(memberId, employeeAffiliationRow["AffiliationId"]);
             Assert.AreEqual(employee.EmpId, employeeAffiliationRow["EmpId"]);
         }
+
+        [Test]
+        public void LoadUnionMember()
+        {
+            database.AddEmployee(employee);
+
+            int memberId = 7783;
+            ChangeMemberTransaction cmt = new ChangeMemberTransaction(employee.EmpId, memberId, 99.42, database);
+            cmt.Execute();
+
+            var unionMember = database.GetUnionMember(memberId);
+            Assert.AreEqual(employee.EmpId, unionMember.EmpId);
+            Assert.AreEqual(employee.Name, unionMember.Name);
+            Assert.AreEqual(employee.Address, unionMember.Address);
+
+            var unionAffiliation = unionMember.Affiliation as UnionAffiliation;
+            Assert.AreEqual(memberId, unionAffiliation.MemberId);
+            Assert.AreEqual(99.42, unionAffiliation.Dues, .01);
+        }
     }
 }

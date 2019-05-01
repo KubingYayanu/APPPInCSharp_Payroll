@@ -378,9 +378,6 @@ namespace APPPInCSharp_Payroll.UnitTests
             Assert.IsNotNull(e);
             Assert.IsNotNull(affiliation);
             Assert.IsTrue(affiliation is NoAffiliation);
-
-            Employee member = database.GetUnionMember(memberId);
-            Assert.IsNull(member);
         }
 
         [Test]
