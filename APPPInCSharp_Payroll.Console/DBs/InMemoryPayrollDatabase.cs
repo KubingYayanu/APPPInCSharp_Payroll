@@ -90,5 +90,24 @@ namespace APPPInCSharp_Payroll.Console
             commissionedClassification.SalesReceipts.Values.CopyTo(salesReceipts, 0);
             return salesReceipts.ToList();
         }
+
+        public void AddServiceCharge(int memberId, ServiceCharge sc)
+        {
+            var empId = Convert.ToInt32(members[memberId]);
+            var employee = employees[empId] as Employee;
+            var affiliation = employee.Affiliation as UnionAffiliation;
+            affiliation.ServiceCharges[sc.Date] = sc;
+        }
+
+        public IList<ServiceCharge> GetServiceCharges(int memberId)
+        {
+            var empId = Convert.ToInt32(members[memberId]);
+            var employee = employees[empId] as Employee;
+            var affiliation = employee.Affiliation as UnionAffiliation;
+            var serviceCharges = new ServiceCharge[affiliation.ServiceCharges.Count];
+            affiliation.ServiceCharges.Values.CopyTo(serviceCharges, 0);
+
+            return serviceCharges.ToList();
+        }
     }
 }

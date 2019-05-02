@@ -29,7 +29,7 @@ namespace APPPInCSharp_Payroll.Console
 
                 if (ua != null)
                 {
-                    ua.AddServiceCharge(new ServiceCharge(time, charge));
+                    database.AddServiceCharge(memberId, new ServiceCharge(time, charge));
                 }
                 else
                 {

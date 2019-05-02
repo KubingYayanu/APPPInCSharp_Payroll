@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace APPPInCSharp_Payroll.UnitTests
 {
@@ -441,6 +442,54 @@ namespace APPPInCSharp_Payroll.UnitTests
 
             var unionMember = database.GetUnionMember(memberId);
             Assert.IsNull(unionMember);
+        }
+
+        [Test]
+        public void UnionMemberWithOneServiceCharge()
+        {
+            database.AddEmployee(employee);
+
+            int memberId = 7783;
+            ChangeMemberTransaction cmt = new ChangeMemberTransaction(employee.EmpId, memberId, 99.42, database);
+            cmt.Execute();
+
+            var date = new DateTime(2005, 8, 8);
+            ServiceChargeTransaction sct = new ServiceChargeTransaction(memberId, date, 12.95, database);
+            sct.Execute();
+
+            var serviceCharges = database.GetServiceCharges(memberId);
+            ServiceCharge sc = serviceCharges.FirstOrDefault(x => x.Date == date);
+            Assert.IsNotNull(sc);
+            Assert.AreEqual(12.95, sc.Amount, 0.001);
+        }
+
+        [Test]
+        public void UnionMemberWithTwoServiceCharge()
+        {
+            database.AddEmployee(employee);
+
+            int memberId = 7783;
+            ChangeMemberTransaction cmt = new ChangeMemberTransaction(employee.EmpId, memberId, 99.42, database);
+            cmt.Execute();
+
+            var date = new DateTime(2005, 8, 8);
+            ServiceChargeTransaction sct = new ServiceChargeTransaction(memberId, date, 12.95, database);
+            sct.Execute();
+
+            var date2 = new DateTime(2005, 8, 15);
+            ServiceChargeTransaction sct2 = new ServiceChargeTransaction(memberId, date2, 4.52, database);
+            sct2.Execute();
+
+            var serviceCharges = database.GetServiceCharges(memberId);
+            Assert.AreEqual(2, serviceCharges.Count);
+
+            ServiceCharge sc1 = serviceCharges[0];
+            Assert.IsNotNull(sc1);
+            Assert.AreEqual(12.95, sc1.Amount, 0.001);
+
+            ServiceCharge sc2 = serviceCharges[1];
+            Assert.IsNotNull(sc2);
+            Assert.AreEqual(4.52, sc2.Amount, 0.001);
         }
     }
 }

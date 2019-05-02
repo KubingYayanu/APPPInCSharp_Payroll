@@ -167,10 +167,12 @@ namespace APPPInCSharp_Payroll.UnitTests
             UnionAffiliation ua = new UnionAffiliation(memberId, 99.52);
             e.Affiliation = ua;
 
-            ServiceChargeTransaction sct = new ServiceChargeTransaction(memberId, new DateTime(2005, 8, 8), 12.95, database);
+            var date = new DateTime(2005, 8, 8);
+            ServiceChargeTransaction sct = new ServiceChargeTransaction(memberId, date, 12.95, database);
             sct.Execute();
 
-            ServiceCharge sc = ua.GetServiceCharge(new DateTime(2005, 8, 8));
+            var serviceCharges = database.GetServiceCharges(memberId);
+            ServiceCharge sc = serviceCharges.FirstOrDefault(x => x.Date == date);
             Assert.IsNotNull(sc);
             Assert.AreEqual(12.95, sc.Amount, 0.001);
         }

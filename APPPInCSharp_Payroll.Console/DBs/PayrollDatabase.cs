@@ -25,5 +25,9 @@ namespace APPPInCSharp_Payroll.Console
         void AddSalesReceipt(int empId, SalesReceipt sr);
 
         IList<SalesReceipt> GetSalesReceipts(int empId);
+
+        void AddServiceCharge(int memberId, ServiceCharge sc);
+
+        IList<ServiceCharge> GetServiceCharges(int memberId);
     }
 }

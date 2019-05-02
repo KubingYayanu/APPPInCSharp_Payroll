@@ -11,18 +11,11 @@ namespace APPPInCSharp_Payroll.Console
             Dues = dues;
         }
 
-        private Hashtable serviceCharges = new Hashtable();
+        public Hashtable ServiceCharges { get; set; } = new Hashtable();
 
         public int MemberId { get; }
 
         public double Dues { get; }
-
-        public void AddServiceCharge(ServiceCharge sc)
-        {
-            serviceCharges[sc.Date] = sc;
-        }
-
-        public ServiceCharge GetServiceCharge(DateTime date) => serviceCharges[date] as ServiceCharge;
 
         public double CalculateDeductions(Paycheck paycheck)
         {
@@ -34,7 +27,7 @@ namespace APPPInCSharp_Payroll.Console
         private double CalculateServiceCharges(Paycheck paycheck)
         {
             double totalServiceCharges = 0.0;
-            foreach (ServiceCharge charge in serviceCharges.Values)
+            foreach (ServiceCharge charge in ServiceCharges.Values)
             {
                 bool isInPayPeriod = DateUtil.IsInPayPeriod(charge.Date, paycheck.PayPeriodStart, paycheck.PayPeriodEnd);
                 if (isInPayPeriod)

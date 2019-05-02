@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -134,6 +133,31 @@ namespace APPPInCSharp_Payroll.Console
             var salesReceipts = table.ToList<SalesReceipt>();
 
             return salesReceipts;
+        }
+
+        public void AddServiceCharge(int memberId, ServiceCharge sc)
+        {
+            string sql = @"insert into ServiceCharge (AffiliationId, Date, Amount)
+                            values (@AffiliationId, @Date, @Amount)";
+            var command =
+                SqlCommandUtil.CreateCommand(sql, "AffiliationId,Date,Amount",
+                    memberId, sc.Date, sc.Amount);
+            command.Connection = connection;
+            command.ExecuteNonQuery();
+        }
+
+        public IList<ServiceCharge> GetServiceCharges(int memberId)
+        {
+            string sql = @"select * from ServiceCharge where AffiliationId = @AffiliationId";
+            var command = SqlCommandUtil.CreateCommand(sql, "AffiliationId", memberId);
+            command.Connection = connection;
+            var adapter = new SqlDataAdapter(command);
+            var dataset = new DataSet();
+            adapter.Fill(dataset);
+            var table = dataset.Tables["table"];
+            var serviceCharges = table.ToList<ServiceCharge>();
+
+            return serviceCharges;
         }
     }
 }
