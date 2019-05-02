@@ -40,7 +40,7 @@ namespace APPPInCSharp_Payroll.Console
             DataSet dataset = new DataSet();
             adapter.Fill(dataset);
             var table = dataset.Tables["table"];
-            var row = table.Rows[0];
+            var row = table.Rows.Count == 0 ? null : table.Rows[0];
 
             return row;
         }

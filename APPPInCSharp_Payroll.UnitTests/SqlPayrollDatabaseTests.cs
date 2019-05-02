@@ -399,5 +399,48 @@ namespace APPPInCSharp_Payroll.UnitTests
             Assert.AreEqual(memberId, unionAffiliation.MemberId);
             Assert.AreEqual(99.42, unionAffiliation.Dues, .01);
         }
+
+        [Test]
+        public void DeleteEmployee()
+        {
+            database.AddEmployee(employee);
+
+            DeleteEmployeeTransaction dt = new DeleteEmployeeTransaction(employee.EmpId, database);
+            dt.Execute();
+
+            Employee e = database.GetEmployee(employee.EmpId);
+            Assert.That(e, Is.Null);
+        }
+
+        [Test]
+        public void GetAllEmployeeIds()
+        {
+            database.AddEmployee(employee);
+
+            var e2 = new Employee(321, "Bill", "2st Cst.");
+            e2.Schedule = new BiweeklySchedule();
+            e2.Method = new DirectDepositMethod("1st Bank", "0123456");
+            e2.Classification = new SalariedClassification(5432.10);
+            database.AddEmployee(e2);
+
+            var ids = database.GetAllEmployeeIds();
+            Assert.AreEqual(2, ids.Count);
+        }
+
+        [Test]
+        public void RemoveUnionMember()
+        {
+            database.AddEmployee(employee);
+
+            int memberId = 7783;
+            ChangeMemberTransaction cmt = new ChangeMemberTransaction(employee.EmpId, memberId, 99.42, database);
+            cmt.Execute();
+
+            ChangeUnaffiliatedTransaction cut = new ChangeUnaffiliatedTransaction(employee.EmpId, database);
+            cut.Execute();
+
+            var unionMember = database.GetUnionMember(memberId);
+            Assert.IsNull(unionMember);
+        }
     }
 }

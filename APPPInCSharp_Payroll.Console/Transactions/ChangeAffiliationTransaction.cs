@@ -9,7 +9,10 @@
 
         protected override void Change(Employee e)
         {
-            e.Affiliation = Affiliation;
+            if (!(e.Affiliation is UnionAffiliation))
+            {
+                e.Affiliation = Affiliation;
+            }
             RecordMembership(e);
         }
 

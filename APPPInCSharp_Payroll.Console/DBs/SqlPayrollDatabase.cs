@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace APPPInCSharp_Payroll.Console
 {
@@ -27,12 +28,26 @@ namespace APPPInCSharp_Payroll.Console
 
         public void DeleteEmployee(int id)
         {
-            throw new NotImplementedException();
+            string sql = @"delete from Employee where EmpId = @EmpId";
+            var command = SqlCommandUtil.CreateCommand(sql, "EmpId", id);
+            command.Connection = connection;
+            command.ExecuteNonQuery();
         }
 
         public IList<int> GetAllEmployeeIds()
         {
-            throw new NotImplementedException();
+            string sql = @"select EmpId from Employee";
+            var command = new SqlCommand(sql, connection);
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            DataSet dataset = new DataSet();
+            adapter.Fill(dataset);
+            var table = dataset.Tables["table"];
+            var list =
+                table.AsEnumerable()
+                     .Select(x => x.Field<int>("EmpId"))
+                     .ToList();
+
+            return list;
         }
 
         public Employee GetEmployee(int id)
@@ -65,7 +80,10 @@ namespace APPPInCSharp_Payroll.Console
 
         public void RemoveUnionMember(int memberId)
         {
-            throw new NotImplementedException();
+            string sql = @"delete from Affiliation where Id = @Id";
+            var command = SqlCommandUtil.CreateCommand(sql, "Id", memberId);
+            command.Connection = connection;
+            command.ExecuteNonQuery();
         }
 
         #endregion UnionMember

@@ -42,6 +42,9 @@ namespace APPPInCSharp_Payroll.Console
         public void Execute()
         {
             var row = LoadDataRowFromCommand(Command);
+            if (row == null)
+                return;
+
             var empId = int.Parse(row["EmpId"].ToString());
             var operation = new LoadEmployeeOperation(empId, connection);
             operation.Execute();

@@ -46,6 +46,7 @@
     <Compile Include="Affiliation\Affiliation.cs" />
     <Compile Include="Affiliation\NoAffiliation.cs" />
     <Compile Include="Affiliation\UnionAffiliation.cs" />
+    <Compile Include="DBs\LoadAffiliationOperation.cs" />
     <Compile Include="DBs\LoadEmployeeOperation.cs" />
     <Compile Include="DBs\LoadOperation.cs" />
     <Compile Include="DBs\LoadPaymentClassificationOperation.cs" />

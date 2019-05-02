@@ -49,6 +49,9 @@ namespace APPPInCSharp_Payroll.Console
 
         public void RemoveUnionMember(int memberId)
         {
+            var empId = Convert.ToInt32(members[memberId]);
+            var employee = employees[empId] as Employee;
+            employee.Affiliation = new NoAffiliation();
             members[memberId] = null;
         }
 

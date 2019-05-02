@@ -34,10 +34,14 @@ namespace APPPInCSharp_Payroll.Console
         {
             var row = LoadDataRowFromCommand(Command);
 
+            if (row == null)
+                return;
+
             CreateEmployee(row);
             AddSchedule(row);
             AddPaymentMethod(row);
             AddPaymentClassification(row);
+            AddAffiliation();
         }
 
         public void CreateEmployee(DataRow row)
@@ -78,6 +82,13 @@ namespace APPPInCSharp_Payroll.Console
             var operation = new LoadPaymentClassificationOperation(employee, classificationCode, connection);
             operation.Execute();
             employee.Classification = operation.Classification;
+        }
+
+        public void AddAffiliation()
+        {
+            var operation = new LoadAffiliationOperation(empId, connection);
+            operation.Execute();
+            employee.Affiliation = operation.Affiliation;
         }
     }
 }
