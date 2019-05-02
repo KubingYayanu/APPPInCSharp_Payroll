@@ -29,7 +29,7 @@
 ```sql
 USE [Payroll]
 GO
-/****** Object:  Table [dbo].[Affiliation]    Script Date: 2019/4/26 下午 04:18:55 ******/
+/****** Object:  Table [dbo].[Affiliation]    Script Date: 2019/5/2 下午 08:41:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -44,7 +44,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[CommissionedClassification]    Script Date: 2019/4/26 下午 04:18:55 ******/
+/****** Object:  Table [dbo].[CommissionedClassification]    Script Date: 2019/5/2 下午 08:41:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -56,7 +56,7 @@ CREATE TABLE [dbo].[CommissionedClassification](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[DirectDepositAccount]    Script Date: 2019/4/26 下午 04:18:55 ******/
+/****** Object:  Table [dbo].[DirectDepositAccount]    Script Date: 2019/5/2 下午 08:41:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -68,7 +68,7 @@ CREATE TABLE [dbo].[DirectDepositAccount](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Employee]    Script Date: 2019/4/26 下午 04:18:55 ******/
+/****** Object:  Table [dbo].[Employee]    Script Date: 2019/5/2 下午 08:41:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -87,7 +87,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[EmployeeAffiliation]    Script Date: 2019/4/26 下午 04:18:55 ******/
+/****** Object:  Table [dbo].[EmployeeAffiliation]    Script Date: 2019/5/2 下午 08:41:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -98,7 +98,7 @@ CREATE TABLE [dbo].[EmployeeAffiliation](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[HourlyClassification]    Script Date: 2019/4/26 下午 04:18:55 ******/
+/****** Object:  Table [dbo].[HourlyClassification]    Script Date: 2019/5/2 下午 08:41:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -109,7 +109,7 @@ CREATE TABLE [dbo].[HourlyClassification](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[PaycheckAddress]    Script Date: 2019/4/26 下午 04:18:55 ******/
+/****** Object:  Table [dbo].[PaycheckAddress]    Script Date: 2019/5/2 下午 08:41:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -120,7 +120,7 @@ CREATE TABLE [dbo].[PaycheckAddress](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SalariedClassification]    Script Date: 2019/4/26 下午 04:18:55 ******/
+/****** Object:  Table [dbo].[SalariedClassification]    Script Date: 2019/5/2 下午 08:41:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -131,7 +131,7 @@ CREATE TABLE [dbo].[SalariedClassification](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SalesReceipt]    Script Date: 2019/4/26 下午 04:18:55 ******/
+/****** Object:  Table [dbo].[SalesReceipt]    Script Date: 2019/5/2 下午 08:41:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -143,7 +143,7 @@ CREATE TABLE [dbo].[SalesReceipt](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[ServiceCharge]    Script Date: 2019/4/26 下午 04:18:55 ******/
+/****** Object:  Table [dbo].[ServiceCharge]    Script Date: 2019/5/2 下午 08:41:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -155,7 +155,7 @@ CREATE TABLE [dbo].[ServiceCharge](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[TimeCard]    Script Date: 2019/4/26 下午 04:18:55 ******/
+/****** Object:  Table [dbo].[TimeCard]    Script Date: 2019/5/2 下午 08:41:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -169,32 +169,41 @@ CREATE TABLE [dbo].[TimeCard](
 GO
 ALTER TABLE [dbo].[CommissionedClassification]  WITH CHECK ADD FOREIGN KEY([EmpId])
 REFERENCES [dbo].[Employee] ([EmpId])
+ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[DirectDepositAccount]  WITH CHECK ADD FOREIGN KEY([EmpId])
 REFERENCES [dbo].[Employee] ([EmpId])
+ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[EmployeeAffiliation]  WITH CHECK ADD FOREIGN KEY([AffiliationId])
 REFERENCES [dbo].[Affiliation] ([Id])
+ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[EmployeeAffiliation]  WITH CHECK ADD FOREIGN KEY([EmpId])
 REFERENCES [dbo].[Employee] ([EmpId])
 GO
 ALTER TABLE [dbo].[HourlyClassification]  WITH CHECK ADD FOREIGN KEY([EmpId])
 REFERENCES [dbo].[Employee] ([EmpId])
+ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[PaycheckAddress]  WITH CHECK ADD FOREIGN KEY([EmpId])
 REFERENCES [dbo].[Employee] ([EmpId])
+ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[SalariedClassification]  WITH CHECK ADD FOREIGN KEY([EmpId])
 REFERENCES [dbo].[Employee] ([EmpId])
+ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[SalesReceipt]  WITH CHECK ADD FOREIGN KEY([EmpId])
 REFERENCES [dbo].[Employee] ([EmpId])
+ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[ServiceCharge]  WITH CHECK ADD FOREIGN KEY([AffiliationId])
 REFERENCES [dbo].[Affiliation] ([Id])
+ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[TimeCard]  WITH CHECK ADD FOREIGN KEY([EmpId])
 REFERENCES [dbo].[Employee] ([EmpId])
+ON DELETE CASCADE
 GO
 ```
