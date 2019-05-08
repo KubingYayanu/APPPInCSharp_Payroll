@@ -71,9 +71,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\APPPInCSharp_Payroll.Console\APPPInCSharp_Payroll.Console.csproj">
-      <Project>{D5B6FF98-125A-452A-AE6B-AED6F540AA80}</Project>
-      <Name>APPPInCSharp_Payroll.Console</Name>
+    <ProjectReference Include="..\APPPInCSharp_Payroll.Core\APPPInCSharp_Payroll.Core.csproj">
+      <Project>{ff3949e6-ae24-41bf-980f-323fb37e5652}</Project>
+      <Name>APPPInCSharp_Payroll.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

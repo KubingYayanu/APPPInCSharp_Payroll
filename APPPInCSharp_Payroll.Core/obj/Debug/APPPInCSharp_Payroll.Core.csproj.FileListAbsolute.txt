@@ -1,0 +1,5 @@
+D:\Program Project\GitHub\APPPInCSharp_Payroll\APPPInCSharp_Payroll.Core\bin\Debug\APPPInCSharp_Payroll.Core.dll
+D:\Program Project\GitHub\APPPInCSharp_Payroll\APPPInCSharp_Payroll.Core\bin\Debug\APPPInCSharp_Payroll.Core.pdb
+D:\Program Project\GitHub\APPPInCSharp_Payroll\APPPInCSharp_Payroll.Core\obj\Debug\APPPInCSharp_Payroll.Core.dll
+D:\Program Project\GitHub\APPPInCSharp_Payroll\APPPInCSharp_Payroll.Core\obj\Debug\APPPInCSharp_Payroll.Core.pdb
+D:\Program Project\GitHub\APPPInCSharp_Payroll\APPPInCSharp_Payroll.Core\obj\Debug\APPPInCSharp_Payroll.Core.csprojResolveAssemblyReference.cache

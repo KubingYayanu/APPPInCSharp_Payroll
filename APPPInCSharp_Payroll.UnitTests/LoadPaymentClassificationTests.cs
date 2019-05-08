@@ -1,4 +1,4 @@
-﻿using APPPInCSharp_Payroll.Console;
+﻿using APPPInCSharp_Payroll.Core;
 using NUnit.Framework;
 
 namespace APPPInCSharp_Payroll.UnitTests
