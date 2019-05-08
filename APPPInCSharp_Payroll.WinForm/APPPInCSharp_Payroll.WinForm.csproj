@@ -46,14 +46,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="Forms\AddEmployeeWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Forms\AddEmployeeWindow.Designer.cs">
+      <DependentUpon>AddEmployeeWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presenters\AddEmployeePresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TransactionContainer.cs" />
+    <Compile Include="Views\AddEmployeeView.cs" />
+    <Compile Include="Views\MockAddEmployeeView.cs" />
+    <EmbeddedResource Include="Forms\AddEmployeeWindow.resx">
+      <DependentUpon>AddEmployeeWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -75,6 +82,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\APPPInCSharp_Payroll.Core\APPPInCSharp_Payroll.Core.csproj">
+      <Project>{FF3949E6-AE24-41BF-980F-323FB37E5652}</Project>
+      <Name>APPPInCSharp_Payroll.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

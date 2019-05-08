@@ -45,6 +45,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -59,6 +60,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="AddEmployeePresenterTests.cs" />
+    <Compile Include="AddEmployeeWindowTests.cs" />
     <Compile Include="LoadEmployeeOperationTests.cs" />
     <Compile Include="LoadPaymentClassificationTests.cs" />
     <Compile Include="LoadPaymentMethodOperationTests.cs" />
@@ -74,6 +77,10 @@
     <ProjectReference Include="..\APPPInCSharp_Payroll.Core\APPPInCSharp_Payroll.Core.csproj">
       <Project>{ff3949e6-ae24-41bf-980f-323fb37e5652}</Project>
       <Name>APPPInCSharp_Payroll.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\APPPInCSharp_Payroll.WinForm\APPPInCSharp_Payroll.WinForm.csproj">
+      <Project>{0B0BA6FF-352D-4D27-8906-13512F07AD52}</Project>
+      <Name>APPPInCSharp_Payroll.WinForm</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
