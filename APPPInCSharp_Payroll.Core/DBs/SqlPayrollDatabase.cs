@@ -49,13 +49,20 @@ namespace APPPInCSharp_Payroll.Core
             return list;
         }
 
+        public IList<Employee> GetAllEmployees()
+        {
+            var operation = new LoadAllEmployeeOperation(connection);
+            operation.Execute();
+
+            return operation.Employees;
+        }
+
         public Employee GetEmployee(int id)
         {
             var operation = new LoadEmployeeOperation(id, connection);
             operation.Execute();
-            var loadedEmployee = operation.Employee;
 
-            return loadedEmployee;
+            return operation.Employee;
         }
 
         #endregion Employee

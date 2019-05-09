@@ -27,6 +27,13 @@ namespace APPPInCSharp_Payroll.Core
             return employees[id] as Employee;
         }
 
+        public IList<Employee> GetAllEmployees()
+        {
+            var list = new Employee[employees.Count];
+            employees.Values.CopyTo(list, 0);
+            return list.ToList();
+        }
+
         public void DeleteEmployee(int id)
         {
             employees[id] = null;

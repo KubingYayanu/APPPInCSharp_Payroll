@@ -10,6 +10,8 @@ namespace APPPInCSharp_Payroll.Core
 
         Employee GetEmployee(int id);
 
+        IList<Employee> GetAllEmployees();
+
         void DeleteEmployee(int id);
 
         void AddUnionMember(int memberId, Employee e);
