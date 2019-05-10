@@ -65,10 +65,14 @@
     <Compile Include="LoadEmployeeOperationTests.cs" />
     <Compile Include="LoadPaymentClassificationTests.cs" />
     <Compile Include="LoadPaymentMethodOperationTests.cs" />
+    <Compile Include="PayrollPresenterTests.cs" />
     <Compile Include="PayrollTests.cs" />
+    <Compile Include="PayrollWindowTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlPayrollDatabaseTests.cs" />
+    <Compile Include="TransactionContainerTests.cs" />
     <Compile Include="UtilitiesTests.cs" />
+    <Compile Include="WindowViewLoaderTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

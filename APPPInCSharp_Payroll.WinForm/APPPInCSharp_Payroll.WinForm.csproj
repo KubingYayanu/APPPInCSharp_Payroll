@@ -33,8 +33,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.VisualBasic.Compatibility" />
+    <Reference Include="stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,14 +59,30 @@
     <Compile Include="Forms\AddEmployeeWindow.Designer.cs">
       <DependentUpon>AddEmployeeWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\PayrollWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PayrollWindow.Designer.cs">
+      <DependentUpon>PayrollWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PayrollMain.cs" />
     <Compile Include="Presenters\AddEmployeePresenter.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Presenters\MockPayrollPresenter.cs" />
+    <Compile Include="Presenters\PayrollPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TransactionContainer.cs" />
     <Compile Include="Views\AddEmployeeView.cs" />
     <Compile Include="Views\MockAddEmployeeView.cs" />
+    <Compile Include="Views\MockPayrollView.cs" />
+    <Compile Include="Views\MockViewLoader.cs" />
+    <Compile Include="Views\PayrollView.cs" />
+    <Compile Include="Views\ViewLoader.cs" />
+    <Compile Include="Views\WindowViewLoader.cs" />
     <EmbeddedResource Include="Forms\AddEmployeeWindow.resx">
       <DependentUpon>AddEmployeeWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PayrollWindow.resx">
+      <DependentUpon>PayrollWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
